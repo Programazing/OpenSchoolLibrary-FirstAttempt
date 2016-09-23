@@ -11,5 +11,7 @@ namespace Open_School_Library.Models.DatabaseModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Grade { get; set; }
+
+        public ICollection<Student> Students { get; set; }
     }
 }
