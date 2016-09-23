@@ -75,6 +75,18 @@ namespace Open_School_Library.Data
             }
 
             context.SaveChanges();
+
+            var books = new Book[]
+            {
+                new Book {Title="Moby Dick", SubTitle="", Author="Author Guy", ISBN=12345, GenreID=1, DeweyID=1  }
+            };
+
+            foreach (Book s in books)
+            {
+                context.Books.Add(s);
+            }
+
+            context.SaveChanges();
         }
 
     }
