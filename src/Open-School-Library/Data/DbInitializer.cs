@@ -39,7 +39,7 @@ namespace Open_School_Library.Data
 
             var students = new Student[]
             {
-                new Student { FirstName="John", LastName="Tell", Email="a@b.com", Grade=3, TeacherID = 1 , Fines=1.50M, IssusedID=10254 }
+                new Student { FirstName="John", LastName="Tell", Email="a@b.com", Grade=3, TeacherID = 1 , Fines=01.50M, IssusedID=10254 }
             };
 
             foreach (Student s in students)
@@ -84,6 +84,18 @@ namespace Open_School_Library.Data
             foreach (Book s in books)
             {
                 context.Books.Add(s);
+            }
+
+            context.SaveChanges();
+
+            var settings = new Setting[]
+            {
+                new Setting { FineAmount=00.25M }
+            };
+
+            foreach (Setting s in settings)
+            {
+                context.Settings.Add(s);
             }
 
             context.SaveChanges();
