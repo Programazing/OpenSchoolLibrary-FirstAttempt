@@ -14,5 +14,8 @@ namespace Open_School_Library.Models.DatabaseModels
         public int GenreID { get; set; }
         public int DeweyID { get; set; }
         public int ISBN { get; set; }
+
+        public Genre Genre { get; set; }
+        public Dewey Dewey { get; set; }
     }
 }
