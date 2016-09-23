@@ -30,6 +30,21 @@ namespace Open_School_Library.Data
             {
                 context.Genres.Add(s);
             }
+
+            context.SaveChanges();
+
+            var deweys = new Dewey[]
+            {
+                new Dewey { Name="Computer Science, Information & General Works", Number=000 },
+                new Dewey { Name="Philosophy & Psychology", Number=100 },
+                new Dewey { Name="Religion", Number=200 }
+            };
+
+            foreach (Dewey s in deweys)
+            {
+                context.Deweys.Add(s);
+            }
+
             context.SaveChanges();
         }
 
