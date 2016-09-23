@@ -23,6 +23,8 @@ namespace Open_School_Library.Data
 
         public DbSet<Dewey> Deweys { get; set; }
 
+        public DbSet<BookLoan> BookLoans { get; set; }
+
         public DbSet<Setting> Settings { get; set; }
     }
 }
