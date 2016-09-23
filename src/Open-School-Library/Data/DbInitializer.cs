@@ -12,17 +12,22 @@ namespace Open_School_Library.Data
     {
         public static void Initialize(LibraryContext context)
         {
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            //Look for Students
-            if(context.Students.Any())
+            /*The following is if you want to check befoe deleting
+            this will be removed before version 1.0.0 beta release
+            if you see this in the code after the release please
+            remove it. */
+
+            /*if(context.Students.Any())
             {
                 return; //DB has been seeded
-            }
+            }*/
 
             var teachers = new Teacher[]
             {
-                new Teacher {FirstName="Erik", LastName="Henderson", Grade=3 }
+                new Teacher {FirstName="Erik2", LastName="Henderson", Grade=3 }
             };
 
             foreach (Teacher s in teachers)
