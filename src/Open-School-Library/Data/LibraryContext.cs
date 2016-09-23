@@ -14,5 +14,7 @@ namespace Open_School_Library.Data
         }
 
         public DbSet<Genre> Genres { get; set; }
+
+        public DbSet<Dewey> Deweys { get; set; }
     }
 }
