@@ -16,7 +16,11 @@ namespace Open_School_Library.Models.DatabaseModels
         public decimal Fines { get; set; }
         public int IssusedID { get; set; }
         public string Email { get; set; }
-        public int HomeRoomTeacher { get; set; }
+
+        public int TeacherID { get; set; }
+
+
+        public Teacher Teacher { get; set; }
 
     }
 }

@@ -20,9 +20,21 @@ namespace Open_School_Library.Data
                 return; //DB has been seeded
             }
 
+            var teachers = new Teacher[]
+            {
+                new Teacher {FirstName="Erik", LastName="Henderson", Grade=3 }
+            };
+
+            foreach (Teacher s in teachers)
+            {
+                context.Teachers.Add(s);
+            }
+
+            context.SaveChanges();
+
             var students = new Student[]
             {
-                new Student { FirstName="John", LastName="Tell", Email="a@b.com", Grade=3, HomeRoomTeacher=1, Fines=1.50M, IssusedID=10254 }
+                new Student { FirstName="John", LastName="Tell", Email="a@b.com", Grade=3, TeacherID = 1 , Fines=1.50M, IssusedID=10254 }
             };
 
             foreach (Student s in students)
