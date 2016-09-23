@@ -15,10 +15,22 @@ namespace Open_School_Library.Data
             context.Database.EnsureCreated();
 
             //Look for Students
-            if(context.Genres.Any())
+            if(context.Students.Any())
             {
                 return; //DB has been seeded
             }
+
+            var students = new Student[]
+            {
+                new Student { FirstName="John", LastName="Tell", Email="a@b.com", Grade=3, HomeRoomTeacher=1, Fines=1.50M, IssusedID=10254 }
+            };
+
+            foreach (Student s in students)
+            {
+                context.Students.Add(s);
+            }
+
+            context.SaveChanges();
 
             var genres = new Genre[]
             {
