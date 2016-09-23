@@ -32,6 +32,18 @@ namespace Open_School_Library.Data
 
             context.SaveChanges();
 
+            var teachers = new Teacher[]
+            {
+                new Teacher {FirstName="Erik", LastName="Henderson", Grade=3 }
+            };
+
+            foreach (Teacher s in teachers)
+            {
+                context.Teachers.Add(s);
+            }
+
+            context.SaveChanges();
+
             var genres = new Genre[]
             {
                 new Genre { Name="Horror" },
