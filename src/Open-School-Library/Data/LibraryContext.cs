@@ -13,6 +13,8 @@ namespace Open_School_Library.Data
         {
         }
 
+        public DbSet<Student> Students { get; set; }
+
         public DbSet<Genre> Genres { get; set; }
 
         public DbSet<Dewey> Deweys { get; set; }
