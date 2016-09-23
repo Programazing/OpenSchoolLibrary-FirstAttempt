@@ -88,6 +88,18 @@ namespace Open_School_Library.Data
 
             context.SaveChanges();
 
+            var bookloans = new BookLoan[]
+            {
+                new BookLoan { BookID=1, StudentID=1, CheckedOutWhen= new DateTime(2016, 9, 21), DueWhen= new DateTime(2016, 10, 21) }
+            };
+
+            foreach (BookLoan s in bookloans)
+            {
+                context.BookLoans.Add(s);
+            }
+
+            context.SaveChanges();
+
             var settings = new Setting[]
             {
                 new Setting { FineAmount=00.25M }
