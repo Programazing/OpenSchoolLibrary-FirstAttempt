@@ -12,7 +12,7 @@ namespace Open_School_Library.Models.DatabaseModels
         public int StudentID { get; set; }
         public DateTime CheckedOutWhen { get; set; }
         public DateTime DueWhen { get; set; }
-        public DateTime ReturnedWhen { get; set; }
+        public DateTime? ReturnedWhen { get; set; }
 
         public Book Book { get; set; }
         public Student Student { get; set; }
