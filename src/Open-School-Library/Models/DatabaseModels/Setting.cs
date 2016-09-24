@@ -10,6 +10,6 @@ namespace Open_School_Library.Models.DatabaseModels
     {
         public int SettingID { get; set; }
         [Column(TypeName = "Money")]
-        public decimal FineAmount { get; set; }
+        public decimal? FineAmount { get; set; }
     }
 }

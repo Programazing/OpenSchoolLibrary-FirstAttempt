@@ -10,7 +10,6 @@ namespace Open_School_Library.Models.DatabaseModels
     {
         public int GenreId { get; set; }
 
-        [StringLength(50)]
         public string Name { get; set; }
     }
 }
