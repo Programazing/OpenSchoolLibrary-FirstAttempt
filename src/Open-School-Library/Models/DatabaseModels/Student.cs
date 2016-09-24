@@ -13,8 +13,8 @@ namespace Open_School_Library.Models.DatabaseModels
         public string LastName { get; set; }
         public int Grade { get; set; }
         [Column(TypeName = "Money")]
-        public decimal Fines { get; set; }
-        public int IssusedID { get; set; }
+        public decimal? Fines { get; set; }
+        public int? IssusedID { get; set; }
         public string Email { get; set; }
 
         public int TeacherID { get; set; }
