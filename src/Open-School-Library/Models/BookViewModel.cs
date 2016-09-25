@@ -1,0 +1,22 @@
+﻿using Open_School_Library.Models.DatabaseModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Open_School_Library.Models
+{
+    public class BookViewModel
+    {
+        public int BookID { get; set; }
+        public string Title { get; set; }
+        public string SubTitle { get; set; }
+        public string Author { get; set; }
+        public string Genre { get; set; }
+        public string GenreList { get; set; }
+        public string Dewey { get; set; }
+        public string DeweyList { get; set; }
+        public int ISBN { get; set; }
+        public string Availability { get; set; }
+    }
+}

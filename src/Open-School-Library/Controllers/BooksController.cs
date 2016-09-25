@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Open_School_Library.Data;
 using Open_School_Library.Models.DatabaseModels;
+using Open_School_Library.Models;
 
 namespace Open_School_Library.Controllers
 {
@@ -77,13 +78,30 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Books.SingleOrDefaultAsync(m => m.BookID == id);
+            var book =
+            _context.Books
+            .Where(b => b.BookID == id)
+            .Select(r => new BookViewModel
+            {
+                BookID = r.BookID,
+                Title = r.Title,
+                SubTitle = r.SubTitle,
+                Author = r.Author,
+                ISBN = r.ISBN,
+                Dewey = r.Dewey.Name,
+                Genre = r.Genre.Name
+            }).FirstOrDefault();
+
+            var deweyList = _context.Deweys.Select(b => b.Name);
+            var genreList = _context.Genres.Select(b => b.Name);
+
             if (book == null)
             {
                 return NotFound();
             }
-            ViewData["DeweyID"] = new SelectList(_context.Deweys, "DeweyID", "DeweyID", book.DeweyID);
-            ViewData["GenreID"] = new SelectList(_context.Genres, "GenreId", "GenreId", book.GenreID);
+
+            ViewData["DeweyList"] = new SelectList(deweyList);
+            ViewData["GenreList"] = new SelectList(genreList);
             return View(book);
         }
 
