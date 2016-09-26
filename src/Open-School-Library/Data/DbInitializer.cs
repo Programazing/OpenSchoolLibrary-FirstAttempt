@@ -52,7 +52,9 @@ namespace Open_School_Library.Data
             var genres = new Genre[]
             {
                 new Genre { Name="Horror" },
-                new Genre { Name="Romance" }
+                new Genre { Name="Romance" },
+                new Genre { Name="Blah " },
+                new Genre { Name="Blah2" }
             };
 
             foreach (Genre s in genres)
@@ -78,7 +80,7 @@ namespace Open_School_Library.Data
 
             var books = new Book[]
             {
-                new Book {Title="Moby Dick", SubTitle="", Author="Author Guy", ISBN=12345, GenreID=1, DeweyID=1  }
+                new Book {Title="Moby Dick", SubTitle="", Author="Author Guy", ISBN=12345, GenreID=4, DeweyID=1  }
             };
 
             foreach (Book s in books)
