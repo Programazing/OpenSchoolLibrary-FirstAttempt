@@ -161,7 +161,20 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Books.SingleOrDefaultAsync(m => m.BookID == id);
+            var book =
+            _context.Books
+            .Where(b => b.BookID == id)
+            .Select(r => new BookDeleteViewModel
+            {
+                BookID = r.BookID,
+                Title = r.Title,
+                SubTitle = r.SubTitle,
+                Author = r.Author,
+                ISBN = r.ISBN,
+                DeweyName = r.Dewey.Name,
+                GenreName = r.Genre.Name
+            }).FirstOrDefault();
+
             if (book == null)
             {
                 return NotFound();
