@@ -88,20 +88,18 @@ namespace Open_School_Library.Controllers
                 SubTitle = r.SubTitle,
                 Author = r.Author,
                 ISBN = r.ISBN,
-                Dewey = r.Dewey.Name,
-                Genre = r.Genre.Name
+                DeweyID = r.Dewey.DeweyID,
+                GenreID = r.Genre.GenreId
             }).FirstOrDefault();
 
-            var deweyList = _context.Deweys.Select(b => b.Name);
-            var genreList = _context.Genres.Select(b => b.Name);
+            book.GenreList = new SelectList(_context.Genres.Select(b => new { b.GenreId, b.Name}).ToList(), "GenreId", "Name");
+            book.DeweyList = new SelectList(_context.Deweys.Select(b => new { b.DeweyID, b.Name }).ToList(), "DeweyID", "Name");
 
             if (book == null)
             {
                 return NotFound();
             }
-
-            ViewData["DeweyList"] = new SelectList(deweyList);
-            ViewData["GenreList"] = new SelectList(genreList);
+            
             return View(book);
         }
 
