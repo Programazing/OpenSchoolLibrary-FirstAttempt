@@ -7,9 +7,21 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Book</h4>
+    <h4>@Model.Title</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SubTitle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SubTitle)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Author)
         </dt>
@@ -21,18 +33,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ISBN)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SubTitle)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SubTitle)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.GenreName)
