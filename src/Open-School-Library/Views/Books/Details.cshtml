@@ -1,4 +1,4 @@
-@model Open_School_Library.Models.DatabaseModels.Book
+@model Open_School_Library.Models.BookViewModels.BookDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -33,6 +33,18 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GenreName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GenreName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DeweyName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DeweyName)
         </dd>
     </dl>
 </div>
