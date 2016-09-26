@@ -6,9 +6,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Open_School_Library.Models
+namespace Open_School_Library.Models.BookViewModels
 {
-    public class BookViewModel
+    public class BookEditViewModel
     {
         public int BookID { get; set; }
 

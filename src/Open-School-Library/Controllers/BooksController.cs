@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Open_School_Library.Data;
 using Open_School_Library.Models.DatabaseModels;
-using Open_School_Library.Models;
+using Open_School_Library.Models.BookViewModels;
 
 namespace Open_School_Library.Controllers
 {
@@ -81,7 +81,7 @@ namespace Open_School_Library.Controllers
             var book =
             _context.Books
             .Where(b => b.BookID == id)
-            .Select(r => new BookViewModel
+            .Select(r => new BookEditViewModel
             {
                 BookID = r.BookID,
                 Title = r.Title,
