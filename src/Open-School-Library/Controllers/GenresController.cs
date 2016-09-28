@@ -41,7 +41,16 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            var genre = await _context.Genres.SingleOrDefaultAsync(m => m.GenreId == id);
+            var genre =
+            _context.Genres
+            .Where(g => g.GenreId == id)
+            .Select(r => new GenreDetailsViewModel
+            {
+                GenreId = r.GenreId,
+                Name = r.Name
+
+            }).FirstOrDefault();
+
             if (genre == null)
             {
                 return NotFound();
