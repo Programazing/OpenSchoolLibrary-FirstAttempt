@@ -153,7 +153,17 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            var dewey = await _context.Deweys.SingleOrDefaultAsync(m => m.DeweyID == id);
+            var dewey =
+            _context.Deweys
+            .Where(d => d.DeweyID == id)
+            .Select(r => new DeweyDeleteViewModel
+            {
+                DeweyID = r.DeweyID,
+                Name = r.Name,
+                Number = r.Number
+
+            }).FirstOrDefault();
+
             if (dewey == null)
             {
                 return NotFound();

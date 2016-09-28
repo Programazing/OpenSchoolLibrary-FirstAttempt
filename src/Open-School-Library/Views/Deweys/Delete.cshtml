@@ -1,4 +1,4 @@
-@model Open_School_Library.Models.DatabaseModels.Dewey
+@model Open_School_Library.Models.DeweyViewModels.DeweyDeleteViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -6,9 +6,9 @@
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this dewey?</h3>
 <div>
-    <h4>Dewey</h4>
+    <h4>@Model.Name</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
