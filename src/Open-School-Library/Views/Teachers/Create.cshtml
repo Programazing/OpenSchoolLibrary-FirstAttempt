@@ -1,4 +1,4 @@
-@model Open_School_Library.Models.DatabaseModels.Teacher
+@model Open_School_Library.Models.TeacherViewModels.TeacherCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -19,17 +19,17 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Grade" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Grade" class="form-control" />
-                <span asp-validation-for="Grade" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
             <label asp-for="LastName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Grade" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Grade" class="form-control" />
+                <span asp-validation-for="Grade" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
