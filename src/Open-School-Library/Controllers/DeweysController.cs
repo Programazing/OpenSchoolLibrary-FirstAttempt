@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Open_School_Library.Data;
 using Open_School_Library.Models.DatabaseModels;
+using Open_School_Library.Models.DeweyViewModels;
 
 namespace Open_School_Library.Controllers
 {
@@ -22,7 +23,16 @@ namespace Open_School_Library.Controllers
         // GET: Deweys
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Deweys.ToListAsync());
+            IEnumerable<DeweyIndexViewModel> deweys =
+            _context.Deweys
+            .Select(r => new DeweyIndexViewModel
+            {
+                DeweyID = r.DeweyID,
+                Name = r.Name,
+                Number = r.Number
+            });
+
+            return View(deweys);
         }
 
         // GET: Deweys/Details/5
