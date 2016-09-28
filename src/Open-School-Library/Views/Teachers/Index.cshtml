@@ -1,4 +1,4 @@
-@model IEnumerable<Open_School_Library.Models.DatabaseModels.Teacher>
+@model IEnumerable<Open_School_Library.Models.TeacherViewModels.TeacherIndexViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Teacher</a>
 </p>
 <table class="table">
     <thead>
@@ -16,10 +16,10 @@
                 @Html.DisplayNameFor(model => model.FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Grade)
+                @Html.DisplayNameFor(model => model.LastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.Grade)
             </th>
             <th></th>
         </tr>
@@ -31,10 +31,10 @@
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Grade)
+                @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastName)
+                @Html.DisplayFor(modelItem => item.Grade)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TeacherID">Edit</a> |

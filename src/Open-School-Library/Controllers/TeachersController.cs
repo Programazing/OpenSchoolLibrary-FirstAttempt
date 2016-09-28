@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Open_School_Library.Data;
 using Open_School_Library.Models.DatabaseModels;
+using Open_School_Library.Models.TeacherViewModels;
 
 namespace Open_School_Library.Controllers
 {
@@ -22,7 +23,18 @@ namespace Open_School_Library.Controllers
         // GET: Teachers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Teachers.ToListAsync());
+            IEnumerable<TeacherIndexViewModel> teachers =
+            _context.Teachers
+            .Select(r => new TeacherIndexViewModel
+            {
+                TeacherID = r.TeacherID,
+                FirstName = r.FirstName,
+                LastName = r.LastName,
+                Grade = r.Grade
+            });
+
+
+            return View(teachers);
         }
 
         // GET: Teachers/Details/5
