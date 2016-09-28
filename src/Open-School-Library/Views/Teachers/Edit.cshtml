@@ -1,4 +1,4 @@
-@model Open_School_Library.Models.DatabaseModels.Teacher
+@model Open_School_Library.Models.TeacherViewModels.TeacherEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -8,7 +8,7 @@
 
 <form asp-action="Edit">
     <div class="form-horizontal">
-        <h4>Teacher</h4>
+        <h4>@Model.FirstName @Model.LastName</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="TeacherID" />
@@ -20,17 +20,17 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Grade" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Grade" class="form-control" />
-                <span asp-validation-for="Grade" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
             <label asp-for="LastName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Grade" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Grade" class="form-control" />
+                <span asp-validation-for="Grade" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
