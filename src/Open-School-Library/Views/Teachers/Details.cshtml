@@ -1,4 +1,4 @@
-@model Open_School_Library.Models.DatabaseModels.Teacher
+@model Open_School_Library.Models.TeacherViewModels.TeacherDetailViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Teacher</h4>
+    <h4>@Model.FirstName @Model.LastName</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -17,16 +17,16 @@
             @Html.DisplayFor(model => model.FirstName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Grade)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Grade)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.LastName)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Grade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Grade)
         </dd>
     </dl>
 </div>
