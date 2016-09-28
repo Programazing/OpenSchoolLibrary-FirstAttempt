@@ -82,8 +82,10 @@ namespace Open_School_Library.Controllers
         // GET: Students/Create
         public IActionResult Create()
         {
-            ViewData["TeacherID"] = new SelectList(_context.Teachers, "TeacherID", "TeacherID");
-            return View();
+            var student = new StudentCreateViewModel();
+            student.Teacher = new SelectList(_context.Students.Select(s => new { s.TeacherID, Name = $"{s.Teacher.FirstName} {s.Teacher.LastName}" }).ToList(), "TeacherID", "Name");
+
+            return View(student);
         }
 
         // POST: Students/Create
