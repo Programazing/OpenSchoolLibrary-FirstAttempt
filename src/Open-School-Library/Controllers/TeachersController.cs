@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Open_School_Library.Data;
-using Open_School_Library.Models.DatabaseModels;
+using Open_School_Library.Data.Entities;
 using Open_School_Library.Models.TeacherViewModels;
 
 namespace Open_School_Library.Controllers

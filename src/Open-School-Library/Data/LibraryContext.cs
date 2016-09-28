@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Open_School_Library.Models.DatabaseModels;
+using Open_School_Library.Data.Entities;
 
 namespace Open_School_Library.Data
 {

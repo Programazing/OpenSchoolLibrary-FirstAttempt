@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
-using Open_School_Library.Models.DatabaseModels;
+using Open_School_Library.Data.Entities;
 
 namespace Open_School_Library.Data
 {
