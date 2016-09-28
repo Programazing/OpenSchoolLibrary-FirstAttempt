@@ -1,4 +1,4 @@
-@model Open_School_Library.Models.DatabaseModels.Genre
+@model Open_School_Library.Models.GenreViewModels.GenreEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -8,7 +8,7 @@
 
 <form asp-action="Edit">
     <div class="form-horizontal">
-        <h4>Genre</h4>
+        <h4>@Model.Name</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="GenreId" />
