@@ -32,7 +32,7 @@ namespace Open_School_Library.Controllers
                 LastName = r.LastName,
                 Grade = r.Grade,
                 Fines = r.Fines,
-                IssuedID = r.IssusedID,
+                IssuedID = r.IssuedID,
                 Email = r.Email,
                 TeacherID = r.TeacherID,
                 TeacherFirstName = r.Teacher.FirstName,
@@ -73,7 +73,7 @@ namespace Open_School_Library.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentID,Email,Fines,FirstName,Grade,IssusedID,LastName,TeacherID")] Student student)
+        public async Task<IActionResult> Create([Bind("StudentID,Email,Fines,FirstName,Grade,IssuedID,LastName,TeacherID")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -93,12 +93,30 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students.SingleOrDefaultAsync(m => m.StudentID == id);
+            var student =
+            _context.Students
+            .Where(b => b.StudentID == id)
+            .Select(r => new StudentEditViewModel
+            {
+
+                StudentID= r.StudentID,
+                FirstName = r.FirstName,
+                LastName = r.LastName,
+                Grade = r.Grade,
+                Fines = r.Fines,
+                IssuedID = r.IssuedID,
+                Email = r.Email,
+                TeacherID = r.TeacherID
+
+            }).FirstOrDefault();
+
+            student.Teacher = new SelectList(_context.Students.Select(s => new { s.TeacherID, Name = $"{s.Teacher.FirstName} {s.Teacher.LastName}" }).ToList(), "TeacherID", "Name");
+
             if (student == null)
             {
                 return NotFound();
             }
-            ViewData["TeacherID"] = new SelectList(_context.Teachers, "TeacherID", "TeacherID", student.TeacherID);
+            //ViewData["TeacherID"] = new SelectList(_context.Teachers, "TeacherID", "TeacherID", student.TeacherID);
             return View(student);
         }
 
@@ -107,7 +125,7 @@ namespace Open_School_Library.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StudentID,Email,Fines,FirstName,Grade,IssusedID,LastName,TeacherID")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("StudentID,Email,Fines,FirstName,Grade,IssuedID,LastName,TeacherID")] Student student)
         {
             if (id != student.StudentID)
             {
