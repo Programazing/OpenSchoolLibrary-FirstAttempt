@@ -52,7 +52,25 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students.SingleOrDefaultAsync(m => m.StudentID == id);
+            var student =
+            _context.Students
+            .Where(s => s.StudentID == id)
+            .Select(r => new StudentDetailsViewModel
+            {
+
+                StudentID = r.StudentID,
+                FirstName = r.FirstName,
+                LastName = r.LastName,
+                Grade = r.Grade,
+                Fines = r.Fines,
+                IssuedID = r.IssuedID,
+                Email = r.Email,
+                TeacherID = r.TeacherID,
+                TeacherFirstName = r.Teacher.FirstName,
+                TeacherLastName = r.Teacher.LastName
+
+            }).FirstOrDefault();
+
             if (student == null)
             {
                 return NotFound();
@@ -95,7 +113,7 @@ namespace Open_School_Library.Controllers
 
             var student =
             _context.Students
-            .Where(b => b.StudentID == id)
+            .Where(s => s.StudentID == id)
             .Select(r => new StudentEditViewModel
             {
 
