@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Open_School_Library.Data;
 using Open_School_Library.Models.DatabaseModels;
+using Open_School_Library.Models.GenreViewModels;
 
 namespace Open_School_Library.Controllers
 {
@@ -22,7 +23,14 @@ namespace Open_School_Library.Controllers
         // GET: Genres
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Genres.ToListAsync());
+            IEnumerable<GenreIndexViewModel> genres =
+            _context.Genres
+            .Select(r => new GenreIndexViewModel
+            {
+                GenreId = r.GenreId,
+                Name = r.Name
+            });
+            return View(genres);
         }
 
         // GET: Genres/Details/5
