@@ -14,7 +14,7 @@ namespace Open_School_Library.Models.DatabaseModels
         public int Grade { get; set; }
         [Column(TypeName = "Money")]
         public decimal? Fines { get; set; }
-        public int? IssusedID { get; set; }
+        public int? IssuedID { get; set; }
         public string Email { get; set; }
 
         public int TeacherID { get; set; }

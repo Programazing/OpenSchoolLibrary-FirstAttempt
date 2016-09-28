@@ -1,4 +1,4 @@
-@model Open_School_Library.Models.DatabaseModels.Student
+@model Open_School_Library.Models.StudentViewModels.StudentEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -8,43 +8,15 @@
 
 <form asp-action="Edit">
     <div class="form-horizontal">
-        <h4>Student</h4>
+        <h4>@Model.FirstName @Model.LastName</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="StudentID" />
-        <div class="form-group">
-            <label asp-for="Email" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Fines" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Fines" class="form-control" />
-                <span asp-validation-for="Fines" class="text-danger" />
-            </div>
-        </div>
         <div class="form-group">
             <label asp-for="FirstName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Grade" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Grade" class="form-control" />
-                <span asp-validation-for="Grade" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="IssusedID" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="IssusedID" class="form-control" />
-                <span asp-validation-for="IssusedID" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
@@ -55,9 +27,37 @@
             </div>
         </div>
         <div class="form-group">
+            <label asp-for="Grade" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Grade" class="form-control" />
+                <span asp-validation-for="Grade" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Fines" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Fines" class="form-control" />
+                <span asp-validation-for="Fines" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="IssuedID" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="IssuedID" class="form-control" />
+                <span asp-validation-for="IssuedID" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
             <label asp-for="TeacherID" class="control-label col-md-2"></label>
             <div class="col-md-10">
-                <select asp-for="TeacherID" class="form-control" asp-items="ViewBag.TeacherID"></select>
+                <select asp-for="TeacherID" class="form-control" asp-items="@Model.Teacher"></select>
                 <span asp-validation-for="TeacherID" class="text-danger" />
             </div>
         </div>
