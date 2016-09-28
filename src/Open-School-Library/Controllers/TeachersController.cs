@@ -45,7 +45,17 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            var teacher = await _context.Teachers.SingleOrDefaultAsync(m => m.TeacherID == id);
+            var teacher =
+            _context.Teachers
+            .Where(t => t.TeacherID == id)
+            .Select(r => new TeacherDetailViewModel
+            {
+                TeacherID = r.TeacherID,
+                FirstName = r.FirstName,
+                LastName = r.LastName,
+                Grade = r.Grade
+            }).FirstOrDefault();
+
             if (teacher == null)
             {
                 return NotFound();
