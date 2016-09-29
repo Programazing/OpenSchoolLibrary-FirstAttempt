@@ -102,9 +102,10 @@ namespace Open_School_Library.Data
 
             context.SaveChanges();
 
+
             var settings = new Setting[]
             {
-                new Setting { FineAmount=00.25M }
+                new Setting { FineAmountPerDay=00.25M, CheckoutDurationInDays = 30 }
             };
 
             foreach (Setting s in settings)
