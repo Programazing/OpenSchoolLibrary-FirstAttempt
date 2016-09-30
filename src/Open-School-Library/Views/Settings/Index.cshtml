@@ -1,35 +1,38 @@
-@model IEnumerable<Open_School_Library.Data.Entities.Setting>
+@model Open_School_Library.Models.SettingViewModel.SettingIndexViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Settings";
 }
 
-<h2>Index</h2>
+<h2>Settings</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FineAmount)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FineAmount)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.SettingID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SettingID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SettingID">Delete</a>
-            </td>
-        </tr>
+<form asp-action="Index">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="SettingID" />
+        <div class="form-group">
+            <label asp-for="FineAmountPerDay" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="FineAmountPerDay" class="form-control" />
+                <span asp-validation-for="FineAmountPerDay" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CheckoutDurationInDays" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CheckoutDurationInDays" class="form-control" />
+                <span asp-validation-for="CheckoutDurationInDays" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-    </tbody>
-</table>

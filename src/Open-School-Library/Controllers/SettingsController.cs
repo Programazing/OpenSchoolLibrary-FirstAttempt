@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Open_School_Library.Data;
 using Open_School_Library.Data.Entities;
+using Open_School_Library.Models.SettingViewModel;
 
 namespace Open_School_Library.Controllers
 {
@@ -22,72 +23,31 @@ namespace Open_School_Library.Controllers
         // GET: Settings
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Settings.ToListAsync());
-        }
 
-        // GET: Settings/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
+            var settings =
+            _context.Settings
+            .Select(r => new SettingIndexViewModel
+            {
+                SettingID = r.SettingID,
+                FineAmountPerDay = r.FineAmountPerDay,
+                CheckoutDurationInDays = r.CheckoutDurationInDays
+
+            }).FirstOrDefault();
+
+            if (settings == null)
             {
                 return NotFound();
             }
 
-            var setting = await _context.Settings.SingleOrDefaultAsync(m => m.SettingID == id);
-            if (setting == null)
-            {
-                return NotFound();
-            }
-
-            return View(setting);
+            return View(settings);
         }
 
-        // GET: Settings/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Settings/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Settings
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SettingID,FineAmount")] Setting setting)
+        public async Task<IActionResult> Index(int SettingID, [Bind("SettingID, FineAmountPerDay, CheckoutDurationInDays")] Setting setting)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(setting);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(setting);
-        }
-
-        // GET: Settings/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var setting = await _context.Settings.SingleOrDefaultAsync(m => m.SettingID == id);
-            if (setting == null)
-            {
-                return NotFound();
-            }
-            return View(setting);
-        }
-
-        // POST: Settings/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SettingID,FineAmount")] Setting setting)
-        {
-            if (id != setting.SettingID)
+            if (SettingID != setting.SettingID)
             {
                 return NotFound();
             }
@@ -113,34 +73,6 @@ namespace Open_School_Library.Controllers
                 return RedirectToAction("Index");
             }
             return View(setting);
-        }
-
-        // GET: Settings/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var setting = await _context.Settings.SingleOrDefaultAsync(m => m.SettingID == id);
-            if (setting == null)
-            {
-                return NotFound();
-            }
-
-            return View(setting);
-        }
-
-        // POST: Settings/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var setting = await _context.Settings.SingleOrDefaultAsync(m => m.SettingID == id);
-            _context.Settings.Remove(setting);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
         }
 
         private bool SettingExists(int id)
