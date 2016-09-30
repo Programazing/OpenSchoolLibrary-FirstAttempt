@@ -39,7 +39,8 @@ namespace Open_School_Library.Data
 
             var students = new Student[]
             {
-                new Student { FirstName="John", LastName="Tell", Email="a@b.com", Grade=3, TeacherID = 1 , Fines=01.50M, IssuedID=10254 }
+                new Student { FirstName="John", LastName="Tell", Email="a@b.com", Grade=3, TeacherID = 1 , Fines=01.50M, IssuedID=10254 },
+                new Student { FirstName="Mike", LastName="Hest", Email="a@bc.com", Grade=5, TeacherID = 1 , Fines=01.50M, IssuedID=13254 }
             };
 
             foreach (Student s in students)
@@ -90,17 +91,17 @@ namespace Open_School_Library.Data
 
             context.SaveChanges();
 
-            var bookloans = new BookLoan[]
-            {
-                new BookLoan { BookID=1, StudentID=1, CheckedOutWhen= new DateTime(2016, 9, 21), DueWhen= new DateTime(2016, 10, 21) }
-            };
+            //var bookloans = new BookLoan[]
+            //{
+            //    new BookLoan { BookID=1, StudentID=1, CheckedOutWhen= new DateTime(2016, 9, 21), DueWhen= new DateTime(2016, 10, 21) }
+            //};
 
-            foreach (BookLoan s in bookloans)
-            {
-                context.BookLoans.Add(s);
-            }
+            //foreach (BookLoan s in bookloans)
+            //{
+            //    context.BookLoans.Add(s);
+            //}
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
 
             var settings = new Setting[]

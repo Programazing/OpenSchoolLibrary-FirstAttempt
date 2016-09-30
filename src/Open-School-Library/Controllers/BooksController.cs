@@ -211,16 +211,15 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            if(isBookCheckedOut(id) != false)
+            if(isBookCheckedOut(id) == false)
             {
                 var bookloan =
-                _context.BookLoans
+                _context.Books
                 .Where(b => b.BookID == id)
                 .Select(r => new BookCheckoutViewModel
                 {
                     BookID = r.BookID,
-                    Title = r.Book.Title,
-                    StudentID = r.StudentID,
+                    Title = r.Title
 
                 }).FirstOrDefault();
 
@@ -236,7 +235,7 @@ namespace Open_School_Library.Controllers
             else
             {
                 ViewData["AlreadyCheckedOut"] = "This book has already been checked out.";
-                return View();
+                return RedirectToAction("CheckedOut");
             }
 
 
@@ -248,7 +247,7 @@ namespace Open_School_Library.Controllers
         public async Task<IActionResult> Checkout(int BookID, int StudentID)
         {
 
-            if (ModelState.IsValid && isBookCheckedOut(BookID) != false)
+            if (ModelState.IsValid && isBookCheckedOut(BookID) == false)
             {
                 int thirtyDays =
                     _context.Settings
@@ -270,9 +269,16 @@ namespace Open_School_Library.Controllers
                 ViewBag.SuccessfullyCheckedOut = "Successfully checked out!";
                 return RedirectToAction("Index");
             }
+            else
+            {
+                return RedirectToAction("CheckedOut");
+            }
 
+        }
+
+        public ActionResult CheckedOut()
+        {
             return View();
-
         }
 
         private bool BookExists(int id)
