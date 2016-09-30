@@ -211,9 +211,7 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            var bookCheckoutStatus = isBookCheckedOut(id);
-
-            if(bookCheckoutStatus != false)
+            if(isBookCheckedOut(id) != false)
             {
                 var bookloan =
                 _context.BookLoans
@@ -233,7 +231,6 @@ namespace Open_School_Library.Controllers
                     return NotFound();
                 }
 
-                ViewData["SuccessfullyCheckedOut"] = "Successfully checked out!";
                 return View(bookloan);
             }
             else
@@ -243,6 +240,38 @@ namespace Open_School_Library.Controllers
             }
 
 
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Checkout(int BookID, int StudentID)
+        {
+
+            if (ModelState.IsValid && isBookCheckedOut(BookID) != false)
+            {
+                int thirtyDays =
+                    _context.Settings
+                    .Select(s => s.CheckoutDurationInDays)
+                    .FirstOrDefault();
+
+
+                var bookloan = new BookLoan()
+                {
+                    BookID = BookID,
+                    StudentID = StudentID,
+                    CheckedOutWhen = DateTime.Now,
+                    DueWhen = DateTime.Now.AddDays(thirtyDays)
+
+                };
+
+                _context.Add(bookloan);
+                await _context.SaveChangesAsync();
+                ViewBag.SuccessfullyCheckedOut = "Successfully checked out!";
+                return RedirectToAction("Index");
+            }
+
+            return View();
 
         }
 

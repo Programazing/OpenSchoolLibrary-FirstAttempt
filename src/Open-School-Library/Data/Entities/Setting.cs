@@ -10,6 +10,7 @@ namespace Open_School_Library.Data.Entities
     {
         public int SettingID { get; set; }
         [Column(TypeName = "Money")]
-        public decimal? FineAmount { get; set; }
+        public decimal? FineAmountPerDay { get; set; }
+        public int CheckoutDurationInDays { get; set; }
     }
 }

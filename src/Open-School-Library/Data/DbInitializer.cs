@@ -105,7 +105,7 @@ namespace Open_School_Library.Data
 
             var settings = new Setting[]
             {
-                new Setting { FineAmount=00.25M }
+                new Setting { FineAmountPerDay=00.25M }
             };
 
             foreach (Setting s in settings)
