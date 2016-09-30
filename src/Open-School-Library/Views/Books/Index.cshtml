@@ -1,5 +1,9 @@
 @model IEnumerable<Open_School_Library.Data.Entities.Book>
 
+@{
+    ViewData["Title"] = "Index";
+}
+
 <h2>Book Catalog</h2>
 
 <p>
@@ -44,6 +48,7 @@
                     
             </td>
                 <td>
+                    <a asp-action="Checkout" asp-route-id="@item.BookID">Check Out</a> |
                     <a asp-action="Edit" asp-route-id="@item.BookID">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.BookID">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.BookID">Delete</a>
