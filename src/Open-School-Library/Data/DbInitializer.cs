@@ -39,7 +39,8 @@ namespace Open_School_Library.Data
 
             var students = new Student[]
             {
-                new Student { FirstName="John", LastName="Tell", Email="a@b.com", Grade=3, TeacherID = 1 , Fines=01.50M, IssuedID=10254 }
+                new Student { FirstName="John", LastName="Tell", Email="a@b.com", Grade=3, TeacherID = 1 , Fines=01.50M, IssuedID=10254 },
+                new Student { FirstName="Alex", LastName="Williams", Email="a@bc.com", Grade=5, TeacherID = 1 , Fines=01.00M, IssuedID=10634 }
             };
 
             foreach (Student s in students)

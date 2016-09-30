@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,5 +20,9 @@ namespace Open_School_Library.Models.BookViewModels
         public string DeweyName { get; set; }
         public int ISBN { get; set; }
         public string Availability { get; set; }
+
+
+        public int StudentID { get; set; }
+        public SelectList Students { get; set; }
     }
 }

@@ -202,9 +202,69 @@ namespace Open_School_Library.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Checkout(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var bookCheckoutStatus = isBookCheckedOut(id);
+
+            if(bookCheckoutStatus != false)
+            {
+                var bookloan =
+                _context.BookLoans
+                .Where(b => b.BookID == id)
+                .Select(r => new BookCheckoutViewModel
+                {
+                    BookID = r.BookID,
+                    Title = r.Book.Title,
+                    StudentID = r.StudentID,
+
+                }).FirstOrDefault();
+
+               bookloan.Students = new SelectList(_context.Students.Select(s => new { s.StudentID, Name = $"{s.FirstName} {s.LastName}" }).ToList(), "StudentID", "Name");
+
+                if (bookloan == null)
+                {
+                    return NotFound();
+                }
+
+                ViewData["SuccessfullyCheckedOut"] = "Successfully checked out!";
+                return View(bookloan);
+            }
+            else
+            {
+                ViewData["AlreadyCheckedOut"] = "This book has already been checked out.";
+                return View();
+            }
+
+
+
+        }
+
         private bool BookExists(int id)
         {
             return _context.Books.Any(e => e.BookID == id);
+        }
+
+        private bool isBookCheckedOut(int? id)
+        {
+            var status = _context.BookLoans
+                .Where(b => b.BookID == id && b.ReturnedWhen == null)
+                .FirstOrDefault();
+
+            if(status == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
