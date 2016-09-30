@@ -202,9 +202,98 @@ namespace Open_School_Library.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Checkout(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            if(isBookCheckedOut(id) != false)
+            {
+                var bookloan =
+                _context.BookLoans
+                .Where(b => b.BookID == id)
+                .Select(r => new BookCheckoutViewModel
+                {
+                    BookID = r.BookID,
+                    Title = r.Book.Title,
+                    StudentID = r.StudentID,
+
+                }).FirstOrDefault();
+
+               bookloan.Students = new SelectList(_context.Students.Select(s => new { s.StudentID, Name = $"{s.FirstName} {s.LastName}" }).ToList(), "StudentID", "Name");
+
+                if (bookloan == null)
+                {
+                    return NotFound();
+                }
+
+                return View(bookloan);
+            }
+            else
+            {
+                ViewData["AlreadyCheckedOut"] = "This book has already been checked out.";
+                return View();
+            }
+
+
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Checkout(int BookID, int StudentID)
+        {
+
+            if (ModelState.IsValid && isBookCheckedOut(BookID) != false)
+            {
+                int thirtyDays =
+                    _context.Settings
+                    .Select(s => s.CheckoutDurationInDays)
+                    .FirstOrDefault();
+
+
+                var bookloan = new BookLoan()
+                {
+                    BookID = BookID,
+                    StudentID = StudentID,
+                    CheckedOutWhen = DateTime.Now,
+                    DueWhen = DateTime.Now.AddDays(thirtyDays)
+
+                };
+
+                _context.Add(bookloan);
+                await _context.SaveChangesAsync();
+                ViewBag.SuccessfullyCheckedOut = "Successfully checked out!";
+                return RedirectToAction("Index");
+            }
+
+            return View();
+
+        }
+
         private bool BookExists(int id)
         {
             return _context.Books.Any(e => e.BookID == id);
+        }
+
+        private bool isBookCheckedOut(int? id)
+        {
+            var status = _context.BookLoans
+                .Where(b => b.BookID == id && b.ReturnedWhen == null)
+                .FirstOrDefault();
+
+            if(status == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
