@@ -48,3 +48,7 @@ textarea {
     display: none
   }
 }
+
+.checkedout {
+    color:red;
+}
