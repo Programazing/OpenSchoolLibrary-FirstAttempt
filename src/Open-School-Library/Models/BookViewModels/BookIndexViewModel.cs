@@ -8,15 +8,15 @@ namespace Open_School_Library.Models.BookViewModels
 {
     public class BookIndexViewModel
     {
-        public int BookID { get; set; }
+        public int BookId { get; set; }
         public string Title { get; set; }
-        [Display(Name = "Subtitle")]
+        [Display(Name = "Author")]
         public string Author { get; set; }
         [Display(Name = "Genre")]
         public string GenreName { get; set; }
-        [Display(Name = "Dewey")]
-        public string DeweyName { get; set; }
         public int ISBN { get; set; }
-        public string Availability { get; set; }
+        public string BookLoan { get; set; }
+        public DateTime? AvailableOn { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

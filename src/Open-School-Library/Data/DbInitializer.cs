@@ -81,7 +81,9 @@ namespace Open_School_Library.Data
 
             var books = new Book[]
             {
-                new Book {Title="Moby Dick", SubTitle="", Author="Author Guy", ISBN=12345, GenreID=4, DeweyID=1  }
+                new Book {Title="Moby Dick", SubTitle="", Author="Author Guy", ISBN=12345, GenreID=4, DeweyID=1  },
+                new Book {Title="Book 2", SubTitle="", Author="James Dean", ISBN=12346, GenreID=2, DeweyID=2  },
+                new Book {Title="Book3", SubTitle="", Author="Alex Ander", ISBN=12347, GenreID=1, DeweyID=3  }
             };
 
             foreach (Book s in books)
@@ -91,17 +93,17 @@ namespace Open_School_Library.Data
 
             context.SaveChanges();
 
-            //var bookloans = new BookLoan[]
-            //{
-            //    new BookLoan { BookID=1, StudentID=1, CheckedOutWhen= new DateTime(2016, 9, 21), DueWhen= new DateTime(2016, 10, 21) }
-            //};
+            var bookloans = new BookLoan[]
+            {
+                new BookLoan { BookID=1, StudentID=1, CheckedOutOn= new DateTime(2016, 9, 21), DueOn= new DateTime(2016, 10, 21) }
+            };
 
-            //foreach (BookLoan s in bookloans)
-            //{
-            //    context.BookLoans.Add(s);
-            //}
+            foreach (BookLoan s in bookloans)
+            {
+                context.BookLoans.Add(s);
+            }
 
-            //context.SaveChanges();
+            context.SaveChanges();
 
 
             var settings = new Setting[]
