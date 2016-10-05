@@ -17,6 +17,7 @@ namespace Open_School_Library.Models.BookViewModels
         public int ISBN { get; set; }
         public string BookLoan { get; set; }
         public DateTime? AvailableOn { get; set; }
+        [Display(Name = "Availability")]
         public bool IsAvailable { get; set; }
     }
 }
