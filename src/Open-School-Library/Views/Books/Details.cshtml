@@ -47,6 +47,40 @@
             @Html.DisplayFor(model => model.DeweyName)
         </dd>
     </dl>
+
+    <dl class="dl-horizontal">
+        @if (@Model.IsAvailable == false && Model.StudentID > 0)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.IsAvailable)
+            </dt>
+            <dd>
+                <div class="checkedout"> Checked Out </div>
+            </dd>
+            <dt>
+                Student
+            </dt>
+            <dd>
+                <a asp-controller="Students" asp-action="Details" asp-route-id="@Model.StudentID"> @Model.StudentFristName @Model.StudentLastName  </a>
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.AvailableOn)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AvailableOn)
+            </dd>
+
+        }
+        else
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.IsAvailable)
+            </dt>
+            <dd>
+                <div>Available</div>
+            </dd>
+        }
+    </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.BookID">Edit</a> |
