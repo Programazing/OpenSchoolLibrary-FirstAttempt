@@ -49,19 +49,24 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            var book =
-            _context.Books
-            .Where(b => b.BookId == id)
-            .Select(r => new BookDetailsViewModel
-            {
-                BookID = r.BookId,
-                Title = r.Title,
-                SubTitle = r.SubTitle,
-                Author = r.Author,
-                ISBN = r.ISBN,
-                DeweyName = r.Dewey.Name,
-                GenreName = r.Genre.Name
-            }).FirstOrDefault();
+            var book = (from theBook in _context.Books.Where(b => b.BookId == id)
+                        join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on theBook.BookId equals loan.BookID into result
+                        from loanWithDefault in result.DefaultIfEmpty()
+                        select new BookDetailsViewModel
+                        {
+                            BookID = theBook.BookId,
+                            SubTitle = theBook.SubTitle,
+                            Title = theBook.Title,
+                            Author = theBook.Author,
+                            ISBN = theBook.ISBN,
+                            GenreName = theBook.Genre.Name,
+                            DeweyName = theBook.Dewey.Name,
+                            StudentID = loanWithDefault == null ? null : loanWithDefault.StudentID,
+                            StudentFristName = loanWithDefault == null ? null : loanWithDefault.Student.FirstName,
+                            StudentLastName = loanWithDefault == null ? null : loanWithDefault.Student.LastName,
+                            IsAvailable = loanWithDefault == null,
+                            AvailableOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.DueOn
+                        }).FirstOrDefault();
 
             if (book == null)
             {
