@@ -19,7 +19,6 @@ namespace Open_School_Library.Models.BookViewModels
         public string DeweyName { get; set; }    
         public int ISBN { get; set; }
         [Display(Name = "Availability")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? AvailableOn { get; set; }
         public bool IsAvailable { get; set; }
         public int? StudentID { get; set; }

@@ -67,7 +67,7 @@
                 @Html.DisplayNameFor(model => model.AvailableOn)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.AvailableOn)
+                @Model.AvailableOn.Value.ToString("MM/dd/yyy")
             </dd>
 
         }
