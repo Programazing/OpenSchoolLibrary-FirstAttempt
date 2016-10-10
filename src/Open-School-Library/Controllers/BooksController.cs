@@ -81,14 +81,9 @@ namespace Open_School_Library.Controllers
         {
             var model = new BookCreateViewModel();
 
-            
-
             model.GenreList = new SelectList(_context.Genres.Select(b => new { b.GenreId, b.Name }).ToList(), "GenreId", "Name");
             model.DeweyList = new SelectList(_context.Deweys.Select(b => new { b.DeweyID, b.Name }).ToList(), "DeweyID", "Name");
 
-
-            //ViewData["DeweyID"] = new SelectList(_context.Deweys, "DeweyID", "DeweyID");
-            //ViewData["GenreID"] = new SelectList(_context.Genres, "GenreId", "GenreId");
             return View(model);
         }
 
