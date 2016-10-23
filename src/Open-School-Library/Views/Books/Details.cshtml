@@ -64,6 +64,12 @@
                 <a asp-controller="Students" asp-action="Details" asp-route-id="@Model.StudentID"> @Model.StudentFristName @Model.StudentLastName  </a>
             </dd>
             <dt>
+                @Html.DisplayNameFor(model => model.CheckedOutOn)
+            </dt>
+            <dd>
+                @Model.CheckedOutOn.Value.ToString("MM/dd/yyy")
+            </dd>
+            <dt>
                 @Html.DisplayNameFor(model => model.AvailableOn)
             </dt>
             <dd>

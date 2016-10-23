@@ -58,10 +58,24 @@
 
             </td>
                 <td>
-                    <a asp-action="Checkout" asp-route-id="@item.BookId">Check Out</a> |
-                    <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+                    @if (item.IsAvailable == false)
+                    {
+                        <div>
+                            <a asp-action="Return" asp-route-id="@item.BookId">Return</a> |
+                            <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <a asp-action="Checkout" asp-route-id="@item.BookId">Check Out</a> |
+                            <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+                        </div>     
+                    }
                 </td>
         </tr>
 }
