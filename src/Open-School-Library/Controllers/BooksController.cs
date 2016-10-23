@@ -340,26 +340,30 @@ namespace Open_School_Library.Controllers
 
             if (ModelState.IsValid && isBookCheckedOut(model.BookID) == true)
             {
-                var data = _context.BookLoans.Where(x => x.BookLoanID == model.BookLoanID).FirstOrDefault();
+                var bookLoan = _context.BookLoans.Where(x => x.BookLoanID == model.BookLoanID).FirstOrDefault();
 
-                data.BookLoanID = model.BookLoanID;
-                data.BookID = model.BookID;
-                data.StudentID = model.StudentID;
-                data.CheckedOutOn = (DateTime)model.CheckedOutOn;
-                data.DueOn = (DateTime)model.AvailableOn;
-                data.ReturnedOn = DateTime.Now;
-
-                try
+                if(bookLoan != null)
                 {
-                    _context.Update(data);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
+                    bookLoan.BookLoanID = model.BookLoanID;
+                    bookLoan.BookID = model.BookID;
+                    bookLoan.StudentID = model.StudentID;
+                    bookLoan.CheckedOutOn = (DateTime)model.CheckedOutOn;
+                    bookLoan.DueOn = (DateTime)model.AvailableOn;
+                    bookLoan.ReturnedOn = DateTime.Now;
 
+                    try
+                    {
+                        _context.Update(bookLoan);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        //TODO Add logging and error handling. - Christopher
+                    }
+
+                    return RedirectToAction("Index");
                 }
 
-                return RedirectToAction("Index");
             }
             else
             {
