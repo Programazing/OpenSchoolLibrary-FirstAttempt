@@ -108,7 +108,7 @@ namespace Open_School_Library.Data
 
             var settings = new Setting[]
             {
-                new Setting { FineAmountPerDay=00.25M, CheckoutDurationInDays = 30 }
+                new Setting { FineAmountPerDay=00.25M, CheckoutDurationInDays = 30, AreFinesEnabled = true }
             };
 
             foreach (Setting s in settings)

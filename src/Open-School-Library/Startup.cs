@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Open_School_Library.Data;
 using Open_School_Library.Models;
 using Open_School_Library.Services;
+using Open_School_Library.Helpers;
 
 namespace Open_School_Library
 {
@@ -43,7 +44,7 @@ namespace Open_School_Library
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            // Add BooksContext
+            // Add LibraryContext
             services.AddDbContext<LibraryContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -56,6 +57,7 @@ namespace Open_School_Library
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<FineCalculations>();
 
         }
 
