@@ -1,0 +1,52 @@
+﻿@model Open_School_Library.Models.BookViewModels.BookReturnViewModel
+
+@{
+    ViewData["Title"] = "Return";
+}
+
+<h2>Return</h2>
+
+<div>
+    <h4>@Model.Title</h4>
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            Student
+        </dt>
+        <dd>
+            <a asp-controller="Students" asp-action="Details" asp-route-id="@Model.StudentID"> @Model.StudentFristName @Model.StudentLastName  </a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckedOutOn)
+        </dt>
+        <dd>
+            @Model.CheckedOutOn.Value.ToString("MM/dd/yyy")
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableOn)
+        </dt>
+        <dd>
+            @Model.AvailableOn.Value.ToString("MM/dd/yyy")
+        </dd>
+    </dl>
+
+    <form asp-controller="Books" asp-action="Return" method="post">
+        <input type="hidden" asp-for="BookLoanID" />
+        <input type="hidden" asp-for="BookID" />
+        <input type="hidden" asp-for="StudentID" />
+        <input type="hidden" asp-for="CheckedOutOn" />
+        <input type="hidden" asp-for="AvailableOn" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Return" class="btn btn-default" />
+            </div>
+        </div>
+    </form>
+</div>

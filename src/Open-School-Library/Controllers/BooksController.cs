@@ -64,6 +64,7 @@ namespace Open_School_Library.Controllers
                             StudentID = loanWithDefault == null ? null : loanWithDefault.StudentID,
                             StudentFristName = loanWithDefault == null ? null : loanWithDefault.Student.FirstName,
                             StudentLastName = loanWithDefault == null ? null : loanWithDefault.Student.LastName,
+                            CheckedOutOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.CheckedOutOn,
                             IsAvailable = loanWithDefault == null,
                             AvailableOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.DueOn
                         }).FirstOrDefault();
@@ -288,6 +289,84 @@ namespace Open_School_Library.Controllers
                 return RedirectToAction("CheckedOut");
             }
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Return(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            if (isBookCheckedOut(id) == false)
+            {
+                //Not checked out
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var bookloan = (from book in _context.Books.Where(b => b.BookId == id)
+                            join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on book.BookId equals loan.BookID into result
+                            from loanWithDefault in result.DefaultIfEmpty()
+                            select new BookReturnViewModel
+                            {
+                                BookLoanID = loanWithDefault.BookLoanID,
+                                BookID = book.BookId,
+                                Title = book.Title,
+                                StudentID = loanWithDefault == null ? null : loanWithDefault.StudentID,
+                                StudentFristName = loanWithDefault == null ? null : loanWithDefault.Student.FirstName,
+                                StudentLastName = loanWithDefault == null ? null : loanWithDefault.Student.LastName,
+                                //Fines
+                                CheckedOutOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.CheckedOutOn,
+                                IsAvailable = loanWithDefault == null,
+                                AvailableOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.DueOn
+                            }).FirstOrDefault();
+
+                if (bookloan == null)
+                {
+                    return NotFound();
+                }
+
+                return View(bookloan);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Return(BookReturnViewModel model)
+        {
+
+
+            if (ModelState.IsValid && isBookCheckedOut(model.BookID) == true)
+            {
+                var data = _context.BookLoans.Where(x => x.BookLoanID == model.BookLoanID).FirstOrDefault();
+
+                data.BookLoanID = model.BookLoanID;
+                data.BookID = model.BookID;
+                data.StudentID = model.StudentID;
+                data.CheckedOutOn = (DateTime)model.CheckedOutOn;
+                data.DueOn = (DateTime)model.AvailableOn;
+                data.ReturnedOn = DateTime.Now;
+
+                try
+                {
+                    _context.Update(data);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+
+                }
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+
+            }
+
+            return View();
         }
 
         public ActionResult CheckedOut()
