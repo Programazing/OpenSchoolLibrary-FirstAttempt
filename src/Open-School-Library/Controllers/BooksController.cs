@@ -8,16 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using Open_School_Library.Data;
 using Open_School_Library.Data.Entities;
 using Open_School_Library.Models.BookViewModels;
+using Open_School_Library.Helpers;
 
 namespace Open_School_Library.Controllers
 {
     public class BooksController : Controller
     {
         private readonly LibraryContext _context;
+        private readonly FineCalculations _finesCalculations;
 
-        public BooksController(LibraryContext context)
+        public BooksController(LibraryContext context, FineCalculations finesCalculations)
         {
-            _context = context;    
+            _context = context;
+            _finesCalculations = finesCalculations;
         }
 
         // GET: Books
@@ -336,14 +339,34 @@ namespace Open_School_Library.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Return(BookReturnViewModel model)
         {
-
-
             if (ModelState.IsValid && isBookCheckedOut(model.BookID) == true)
             {
                 var bookLoan = _context.BookLoans.Where(x => x.BookLoanID == model.BookLoanID).FirstOrDefault();
 
                 if(bookLoan != null)
                 {
+                    if (_finesCalculations.areFinesEnabled() == true && _finesCalculations.ReturnedLate(model.BookLoanID) == true)
+                    {
+                        var fine = _finesCalculations.CalculateFine((DateTime)model.CheckedOutOn, DateTime.Now);
+
+                        if(fine > 0)
+                        {
+                            var addFineToStudent = _context.Students.Where(x => x.StudentID == model.StudentID).FirstOrDefault();
+                            addFineToStudent.Fines += fine;
+                            try
+                            {
+                                _context.Update(addFineToStudent);
+                                await _context.SaveChangesAsync();
+                            }
+                            catch (DbUpdateConcurrencyException)
+                            {
+                                //TODO Add logging and error handling. - Christopher
+                            }
+                        }
+                        
+                        
+                    }
+
                     bookLoan.BookLoanID = model.BookLoanID;
                     bookLoan.BookID = model.BookID;
                     bookLoan.StudentID = model.StudentID;
