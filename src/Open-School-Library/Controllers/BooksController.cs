@@ -24,12 +24,13 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Books
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm, string option)
         {
 
             var books = from book in _context.Books
                             join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on book.BookId equals loan.BookID into result
                             from loanWithDefault in result.DefaultIfEmpty()
+                            orderby book.Title
                             select new BookIndexViewModel
                             {
                                 BookId = book.BookId,
@@ -40,6 +41,29 @@ namespace Open_School_Library.Controllers
                                 IsAvailable = loanWithDefault == null,
                                 AvailableOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.DueOn
                             };
+
+            if (!String.IsNullOrEmpty(searchTerm))
+            {
+                if (!String.IsNullOrEmpty(option))
+                {
+                    switch (option)
+                    {
+                        case "author":
+                            books = books.Where(s => s.Author.Contains(searchTerm));
+                            break;
+                        case "isbn":
+                            int isbn = Convert.ToInt32(searchTerm);
+                            books = books.Where(s => s.ISBN == isbn);
+                            break;
+                        case "genre":
+                            books = books.Where(s => s.GenreName.Contains(searchTerm));
+                            break;
+                        default:
+                            books = books.Where(s => s.Title.Contains(searchTerm));
+                            break;
+                    }
+                }
+            }
 
             return View(books);
         }

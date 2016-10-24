@@ -9,6 +9,20 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="Books" asp-action="Index" method="get">
+    <p>
+        <input type="text" name="SearchTerm">
+        <select name="Option">
+            <option value="title" selected>Title</option>
+            <option value="author">Author</option>
+            <option value="isbn">ISBN</option>
+            <option value="genre">Genre</option>
+        </select>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
