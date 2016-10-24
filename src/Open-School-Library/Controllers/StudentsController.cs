@@ -21,7 +21,7 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Students
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm, string option)
         {
             IEnumerable<StudentIndexViewModel> students =
             _context.Students
@@ -37,10 +37,36 @@ namespace Open_School_Library.Controllers
                 TeacherID = r.TeacherID,
                 TeacherFirstName = r.Teacher.FirstName,
                 TeacherLastName = r.Teacher.LastName
-            });            
+            });
+
+            if (!String.IsNullOrEmpty(searchTerm))
+            {
+                if (!String.IsNullOrEmpty(option))
+                {
+                    switch (option)
+                    {
+                        case "lname":
+                            students = students.Where(s => s.LastName.Contains(searchTerm));
+                            break;
+                        case "grade":
+                            int grade = Convert.ToInt32(searchTerm);
+                            students = students.Where(s => s.Grade == grade);
+                            break;
+                        case "issuedID":
+                            int issuedID = Convert.ToInt32(searchTerm);
+                            students = students.Where(s => s.IssuedID == issuedID);
+                            break;
+                        case "email":
+                            students = students.Where(s => s.Email.Contains(searchTerm));
+                            break;
+                        default:
+                            students = students.Where(s => s.FirstName.Contains(searchTerm));
+                            break;
+                    }
+                }
+            }
 
             return View(students);
-
 
         }
 

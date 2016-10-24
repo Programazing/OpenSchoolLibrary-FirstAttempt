@@ -9,6 +9,19 @@
 <p>
     <a asp-action="Create">Create New Student</a>
 </p>
+<form asp-controller="Students" asp-action="Index" method="get">
+    <p>
+        <input type="text" name="SearchTerm">
+        <select name="Option">
+            <option value="fname" selected>First Name</option>
+            <option value="lname">Last name</option>
+            <option value="grade">Grade</option>
+            <option value="issuedID">Issued ID</option>
+            <option value="email">Email</option>
+        </select>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
