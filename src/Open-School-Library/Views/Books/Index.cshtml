@@ -10,16 +10,16 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<form asp-controller="Books" asp-action="Index" method="get">
+<form asp-controller="Books" asp-action="Index" method="get" class="form-inline">
     <p>
-        <input type="text" name="SearchTerm">
-        <select name="Option">
+        <input type="text" name="SearchTerm" class="input-sm">
+        <select name="Option" class="form-control">
             <option value="title" selected>Title</option>
             <option value="author">Author</option>
             <option value="isbn">ISBN</option>
             <option value="genre">Genre</option>
         </select>
-        <input type="submit" value="Filter" />
+        <input type="submit" value="Search" class="btn"/>
     </p>
 </form>
 
