@@ -1,0 +1,37 @@
+﻿@model Open_School_Library.Models.AccountViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register Role";
+}
+
+<h2>Register Role</h2>
+
+@using (Html.BeginForm("RegisterRole", "Roles", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new Account</h4>
+    <hr />
+
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="Name" class="form-control" asp-items="ViewBag.Name"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UserName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="UserName" class="form-control" asp-items="ViewBag.UserName"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Register" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

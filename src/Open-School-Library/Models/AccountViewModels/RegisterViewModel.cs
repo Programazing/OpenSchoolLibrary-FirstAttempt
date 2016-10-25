@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,6 +9,14 @@ namespace Open_School_Library.Models.AccountViewModels
 {
     public class RegisterViewModel
     {
+        //TODO: Role? Really??
+        [Display(Name = "Role")]
+        public string Name { get; set; }
+
+        [MaxLength(256)]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -23,5 +32,9 @@ namespace Open_School_Library.Models.AccountViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        //Roles
+        public SelectList Roles { get; set; }
+        public SelectList Users { get; set; }
     }
 }
