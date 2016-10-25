@@ -1,4 +1,8 @@
-﻿@model IndexViewModel
+﻿@using Microsoft.AspNetCore.Authorization
+@model IndexViewModel
+@inject IAuthorizationService AuthorizationService
+
+
 @{
     ViewData["Title"] = "Manage your account";
 }
@@ -33,5 +37,14 @@
 </div>
 
 <div>
-    @Html.ActionLink("Administrator Control Panel", "Index", "Admin")
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Administrator Control Panel", "Index", "Admin")
+    }
+
+    @if (await AuthorizationService.AuthorizeAsync(User, "ElevatedRole"))
+    {
+        
+    }
+    
 </div>

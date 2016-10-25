@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -34,6 +35,14 @@
                     <li><a asp-area="" asp-controller="Books" asp-action="Index">Books</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    
+                    @if (await AuthorizationService.AuthorizeAsync(User, "ElevatedRole"))
+                    {
+                        <li><a asp-area="" asp-controller="Students" asp-action="Index">Students</a></li>
+                        <li><a asp-area="" asp-controller="Genres" asp-action="Index">Genres</a></li>
+                        <li><a asp-area="" asp-controller="Deweys" asp-action="Index">Deweys</a></li>
+                    }
+
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
