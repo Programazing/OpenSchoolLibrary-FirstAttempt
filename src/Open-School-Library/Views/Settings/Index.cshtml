@@ -30,11 +30,17 @@
             <div class="col-md-10">
                 @if (@Model.AreFinesEnabled == true)
                 {
-                    <input asp-for="FineAmountPerDay" class="form-control" />
+                    <div class="input-group" style="width:280px;">
+                        <span class="input-group-addon">$</span>
+                        <input asp-for="FineAmountPerDay" class="form-control" />
+                    </div>
                 }
                 else
                 {
-                    <input asp-for="FineAmountPerDay" class="form-control" disabled />
+                    <div class="input-group" style="width:280px;">
+                        <span class="input-group-addon">$</span>
+                        <input asp-for="FineAmountPerDay" class="form-control" disabled />
+                    </div>
                 }
                 <span asp-validation-for="FineAmountPerDay" class="text-danger" />
             </div>
