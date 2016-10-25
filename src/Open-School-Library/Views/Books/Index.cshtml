@@ -22,76 +22,77 @@
         <input type="submit" value="Search" class="btn"/>
     </p>
 </form>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ISBN)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GenreName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsAvailable)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ISBN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GenreName)
-            </td>
-            <td>
-                @if (item.IsAvailable == false)
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ISBN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GenreName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsAvailable)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ISBN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GenreName)
+                    </td>
+                    <td>
+                        @if (item.IsAvailable == false)
                 {
-                    <div class="checkedout"> Checked Out </div>
+                            <div class="checkedout"> Checked Out </div>
                 }
                 else
                 {
-                   <div>Available</div>
+                            <div>Available</div>
 
                 }
 
 
-            </td>
-                <td>
-                    @if (item.IsAvailable == false)
+                    </td>
+                    <td>
+                        @if (item.IsAvailable == false)
                     {
-                        <div>
-                            <a asp-action="Return" asp-route-id="@item.BookId">Return</a> |
-                            <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
-                        </div>
+                            <div>
+                                <a asp-action="Return" asp-route-id="@item.BookId">Return</a> |
+                                <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+                            </div>
                     }
                     else
                     {
-                        <div>
-                            <a asp-action="Checkout" asp-route-id="@item.BookId">Check Out</a> |
-                            <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
-                        </div>     
+                            <div>
+                                <a asp-action="Checkout" asp-route-id="@item.BookId">Check Out</a> |
+                                <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+                            </div>
                     }
-                </td>
-        </tr>
+                    </td>
+                </tr>
 }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
