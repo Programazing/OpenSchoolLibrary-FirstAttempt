@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Open_School_Library.Data;
 using Open_School_Library.Data.Entities;
 using Open_School_Library.Models.DeweyViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Open_School_Library.Controllers
 {
+    [Authorize(Policy = "ElevatedRole")]
     public class DeweysController : Controller
     {
         private readonly LibraryContext _context;

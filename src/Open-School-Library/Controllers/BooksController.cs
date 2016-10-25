@@ -9,9 +9,11 @@ using Open_School_Library.Data;
 using Open_School_Library.Data.Entities;
 using Open_School_Library.Models.BookViewModels;
 using Open_School_Library.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Open_School_Library.Controllers
 {
+    [Authorize(Policy = "ElevatedRole")]
     public class BooksController : Controller
     {
         private readonly LibraryContext _context;
@@ -23,6 +25,7 @@ namespace Open_School_Library.Controllers
             _finesCalculations = finesCalculations;
         }
 
+        [AllowAnonymous]
         // GET: Books
         public async Task<IActionResult> Index(string searchTerm, string option)
         {

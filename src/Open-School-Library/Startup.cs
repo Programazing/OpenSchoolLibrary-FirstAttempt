@@ -59,6 +59,12 @@ namespace Open_School_Library
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddTransient<FineCalculations>();
 
+            //Policies
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ElevatedRole", policy => policy.RequireRole("Librarian", "Administrator"));
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

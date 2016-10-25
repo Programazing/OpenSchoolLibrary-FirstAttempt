@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Open_School_Library.Data;
 using Open_School_Library.Data.Entities;
 using Open_School_Library.Models.StudentViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Open_School_Library.Controllers
 {
+    [Authorize(Policy = "ElevatedRole")]
     public class StudentsController : Controller
     {
         private readonly LibraryContext _context;
