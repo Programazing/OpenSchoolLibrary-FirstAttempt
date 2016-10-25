@@ -60,8 +60,12 @@ namespace Open_School_Library.Controllers
                 PhoneNumber = await _userManager.GetPhoneNumberAsync(user),
                 TwoFactor = await _userManager.GetTwoFactorEnabledAsync(user),
                 Logins = await _userManager.GetLoginsAsync(user),
-                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
+                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user),
+                Email = await _userManager.GetEmailAsync(user),
+                //TODO: Find a better way to display the rols on Index
+                Roles = await _userManager.GetRolesAsync(user)
             };
+
             return View(model);
         }
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace Open_School_Library.Models.ManageViewModels
@@ -17,5 +14,9 @@ namespace Open_School_Library.Models.ManageViewModels
         public bool TwoFactor { get; set; }
 
         public bool BrowserRemembered { get; set; }
+
+        public string Email { get; set; }
+        public IList<string> Roles { get; set; }
+
     }
 }
