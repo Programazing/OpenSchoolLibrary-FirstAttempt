@@ -71,6 +71,7 @@ namespace Open_School_Library.Controllers
 
         //
         // POST: /Manage/RemoveLogin
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveLogin(RemoveLoginViewModel account)
@@ -119,6 +120,7 @@ namespace Open_School_Library.Controllers
 
         //
         // POST: /Manage/EnableTwoFactorAuthentication
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnableTwoFactorAuthentication()
@@ -135,6 +137,7 @@ namespace Open_School_Library.Controllers
 
         //
         // POST: /Manage/DisableTwoFactorAuthentication
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DisableTwoFactorAuthentication()
@@ -151,6 +154,7 @@ namespace Open_School_Library.Controllers
 
         //
         // GET: /Manage/VerifyPhoneNumber
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> VerifyPhoneNumber(string phoneNumber)
         {
@@ -166,6 +170,7 @@ namespace Open_School_Library.Controllers
 
         //
         // POST: /Manage/VerifyPhoneNumber
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
@@ -191,6 +196,7 @@ namespace Open_School_Library.Controllers
 
         //
         // POST: /Manage/RemovePhoneNumber
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemovePhoneNumber()
@@ -277,6 +283,7 @@ namespace Open_School_Library.Controllers
         }
 
         //GET: /Manage/ManageLogins
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> ManageLogins(ManageMessageId? message = null)
         {
@@ -302,6 +309,7 @@ namespace Open_School_Library.Controllers
 
         //
         // POST: /Manage/LinkLogin
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult LinkLogin(string provider)
@@ -314,6 +322,7 @@ namespace Open_School_Library.Controllers
 
         //
         // GET: /Manage/LinkLoginCallback
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<ActionResult> LinkLoginCallback()
         {

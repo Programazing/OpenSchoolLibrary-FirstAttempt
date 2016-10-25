@@ -9,12 +9,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Open_School_Library.Models;
 using Open_School_Library.Models.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
-using Open_School_Library.Models.RoleViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Open_School_Library.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class RolesController : Controller
     {
         private readonly ApplicationDbContext _context;
