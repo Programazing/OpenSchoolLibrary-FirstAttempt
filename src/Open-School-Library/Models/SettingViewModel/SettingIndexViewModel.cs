@@ -9,8 +9,9 @@ namespace Open_School_Library.Models.SettingViewModel
     public class SettingIndexViewModel
     {
         public int SettingID { get; set; }
+        [Display(Name = "Enable Fines?")]
+        public bool AreFinesEnabled { get; set; }
         [Display(Name ="Fine Ammount Per Day")]
-
         public decimal? FineAmountPerDay { get; set; }
         [Display(Name = "Checkout Duration in Days")]
         public int CheckoutDurationInDays { get; set; }

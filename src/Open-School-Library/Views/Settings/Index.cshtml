@@ -6,23 +6,37 @@
 
 <h2>Settings</h2>
 
-<form asp-action="Index">
+<form asp-action="Index" class="text-nowrap">
     <div class="form-horizontal">
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="SettingID" />
         <div class="form-group">
-            <label asp-for="FineAmountPerDay" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="FineAmountPerDay" class="form-control" />
-                <span asp-validation-for="FineAmountPerDay" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
             <label asp-for="CheckoutDurationInDays" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="CheckoutDurationInDays" class="form-control" />
                 <span asp-validation-for="CheckoutDurationInDays" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="AreFinesEnabled" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="AreFinesEnabled" class="big-checkbox" />
+                <span asp-validation-for="AreFinesEnabled" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="FineAmountPerDay" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                @if (@Model.AreFinesEnabled == true)
+                {
+                    <input asp-for="FineAmountPerDay" class="form-control" />
+                }
+                else
+                {
+                    <input asp-for="FineAmountPerDay" class="form-control" disabled />
+                }
+                <span asp-validation-for="FineAmountPerDay" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
