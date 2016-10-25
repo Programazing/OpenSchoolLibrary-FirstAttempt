@@ -52,3 +52,5 @@ textarea {
 .checkedout {
     color:red;
 }
+
+.big-checkbox {width: 30px; height: 30px;}

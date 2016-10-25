@@ -29,6 +29,7 @@ namespace Open_School_Library.Controllers
             .Select(r => new SettingIndexViewModel
             {
                 SettingID = r.SettingID,
+                AreFinesEnabled = r.AreFinesEnabled,
                 FineAmountPerDay = r.FineAmountPerDay,
                 CheckoutDurationInDays = r.CheckoutDurationInDays
 
@@ -45,7 +46,7 @@ namespace Open_School_Library.Controllers
         // POST: Settings
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(int SettingID, [Bind("SettingID, FineAmountPerDay, CheckoutDurationInDays")] Setting setting)
+        public async Task<IActionResult> Index(int SettingID, [Bind("SettingID, AreFinesEnabled, FineAmountPerDay, CheckoutDurationInDays")] Setting setting)
         {
             if (SettingID != setting.SettingID)
             {
