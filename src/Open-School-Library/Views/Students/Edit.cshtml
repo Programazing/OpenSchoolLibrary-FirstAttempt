@@ -36,7 +36,10 @@
         <div class="form-group">
             <label asp-for="Fines" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Fines" class="form-control" />
+                <div class="input-group" style="width:280px;">
+                    <span class="input-group-addon">$</span>
+                    <input asp-for="Fines" class="form-control" />
+                </div>
                 <span asp-validation-for="Fines" class="text-danger" />
             </div>
         </div>
