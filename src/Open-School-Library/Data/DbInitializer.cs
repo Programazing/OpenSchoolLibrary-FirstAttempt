@@ -12,7 +12,7 @@ namespace Open_School_Library.Data
     {
         public static void Initialize(LibraryContext context)
         {
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             /*The following is if you want to check befoe deleting
