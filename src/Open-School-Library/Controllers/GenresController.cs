@@ -25,18 +25,19 @@ namespace Open_School_Library.Controllers
         // GET: Genres
         public async Task<IActionResult> Index()
         {
-            IEnumerable<GenreIndexViewModel> genres =
-            _context.Genres
-            .Select(r => new GenreIndexViewModel
-            {
-                GenreId = r.GenreId,
-                Name = r.Name
-            });
-            return View(genres);
+
+            var genres = from genre in _context.Genres
+                           select new GenreIndexViewModel
+                           {
+                               GenreId = genre.GenreId,
+                               Name = genre.Name
+                           };
+
+            return View(await genres.ToListAsync());
         }
 
         // GET: Genres/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -84,7 +85,7 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Genres/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -144,7 +145,7 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Genres/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {

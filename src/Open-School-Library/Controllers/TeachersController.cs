@@ -25,22 +25,21 @@ namespace Open_School_Library.Controllers
         // GET: Teachers
         public async Task<IActionResult> Index()
         {
-            IEnumerable<TeacherIndexViewModel> teachers =
-            _context.Teachers
-            .Select(r => new TeacherIndexViewModel
-            {
-                TeacherID = r.TeacherID,
-                FirstName = r.FirstName,
-                LastName = r.LastName,
-                Grade = r.Grade
-            });
 
+            var teachers = from teacher in _context.Teachers
+                         select new TeacherIndexViewModel
+                         {
+                             TeacherID = teacher.TeacherID,
+                             FirstName = teacher.FirstName,
+                             LastName = teacher.LastName,
+                             Grade = teacher.Grade
+                         };
 
-            return View(teachers);
+            return View(await teachers.ToListAsync());
         }
 
         // GET: Teachers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -89,7 +88,7 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Teachers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -150,7 +149,7 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Teachers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {

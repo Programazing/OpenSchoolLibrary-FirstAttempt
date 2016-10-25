@@ -68,11 +68,11 @@ namespace Open_School_Library.Controllers
                 }
             }
 
-            return View(books);
+            return View(await books.ToListAsync());
         }
 
         // GET: Books/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Books/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -158,14 +158,14 @@ namespace Open_School_Library.Controllers
                 GenreID = r.Genre.GenreId
             }).FirstOrDefault();
 
-            book.GenreList = new SelectList(_context.Genres.Select(b => new { b.GenreId, b.Name}).ToList(), "GenreId", "Name");
+            book.GenreList = new SelectList(_context.Genres.Select(b => new { b.GenreId, b.Name }).ToList(), "GenreId", "Name");
             book.DeweyList = new SelectList(_context.Deweys.Select(b => new { b.DeweyID, b.Name }).ToList(), "DeweyID", "Name");
 
             if (book == null)
             {
                 return NotFound();
             }
-            
+
             return View(book);
         }
 
@@ -207,7 +207,7 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Books/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -248,7 +248,7 @@ namespace Open_School_Library.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Checkout(int? id)
+        public IActionResult Checkout(int? id)
         {
 
             if (id == null)
@@ -256,7 +256,7 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            if(isBookCheckedOut(id) == false)
+            if (isBookCheckedOut(id) == false)
             {
                 var bookloan =
                 _context.Books
@@ -268,7 +268,7 @@ namespace Open_School_Library.Controllers
 
                 }).FirstOrDefault();
 
-               bookloan.Students = new SelectList(_context.Students.Select(s => new { s.StudentID, Name = $"{s.FirstName} {s.LastName}" }).ToList(), "StudentID", "Name");
+                bookloan.Students = new SelectList(_context.Students.Select(s => new { s.StudentID, Name = $"{s.FirstName} {s.LastName}" }).ToList(), "StudentID", "Name");
 
                 if (bookloan == null)
                 {
@@ -322,7 +322,7 @@ namespace Open_School_Library.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Return(int? id)
+        public IActionResult Return(int? id)
         {
             if (id == null)
             {
@@ -337,21 +337,21 @@ namespace Open_School_Library.Controllers
             else
             {
                 var bookloan = (from book in _context.Books.Where(b => b.BookId == id)
-                            join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on book.BookId equals loan.BookID into result
-                            from loanWithDefault in result.DefaultIfEmpty()
-                            select new BookReturnViewModel
-                            {
-                                BookLoanID = loanWithDefault.BookLoanID,
-                                BookID = book.BookId,
-                                Title = book.Title,
-                                StudentID = loanWithDefault == null ? null : loanWithDefault.StudentID,
-                                StudentFristName = loanWithDefault == null ? null : loanWithDefault.Student.FirstName,
-                                StudentLastName = loanWithDefault == null ? null : loanWithDefault.Student.LastName,
-                                //Fines
-                                CheckedOutOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.CheckedOutOn,
-                                IsAvailable = loanWithDefault == null,
-                                AvailableOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.DueOn
-                            }).FirstOrDefault();
+                                join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on book.BookId equals loan.BookID into result
+                                from loanWithDefault in result.DefaultIfEmpty()
+                                select new BookReturnViewModel
+                                {
+                                    BookLoanID = loanWithDefault.BookLoanID,
+                                    BookID = book.BookId,
+                                    Title = book.Title,
+                                    StudentID = loanWithDefault == null ? null : loanWithDefault.StudentID,
+                                    StudentFristName = loanWithDefault == null ? null : loanWithDefault.Student.FirstName,
+                                    StudentLastName = loanWithDefault == null ? null : loanWithDefault.Student.LastName,
+                                    //Fines
+                                    CheckedOutOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.CheckedOutOn,
+                                    IsAvailable = loanWithDefault == null,
+                                    AvailableOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.DueOn
+                                }).FirstOrDefault();
 
                 if (bookloan == null)
                 {

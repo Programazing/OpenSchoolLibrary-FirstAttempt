@@ -25,20 +25,20 @@ namespace Open_School_Library.Controllers
         // GET: Deweys
         public async Task<IActionResult> Index()
         {
-            IEnumerable<DeweyIndexViewModel> deweys =
-            _context.Deweys
-            .Select(r => new DeweyIndexViewModel
-            {
-                DeweyID = r.DeweyID,
-                Name = r.Name,
-                Number = r.Number
-            });
 
-            return View(deweys);
+            var deweys = from dewey in _context.Deweys
+                         select new DeweyIndexViewModel
+                         {
+                             DeweyID = dewey.DeweyID,
+                             Name = dewey.Name,
+                             Number = dewey.Number
+                         };
+
+            return View(await deweys.ToListAsync());
         }
 
         // GET: Deweys/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -87,7 +87,7 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Deweys/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -148,7 +148,7 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Deweys/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {

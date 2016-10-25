@@ -39,6 +39,7 @@
                     @if (await AuthorizationService.AuthorizeAsync(User, "ElevatedRole"))
                     {
                         <li><a asp-area="" asp-controller="Students" asp-action="Index">Students</a></li>
+                        <li><a asp-area="" asp-controller="Teachers" asp-action="Index">Teachers</a></li>
                         <li><a asp-area="" asp-controller="Genres" asp-action="Index">Genres</a></li>
                         <li><a asp-area="" asp-controller="Deweys" asp-action="Index">Deweys</a></li>
                     }

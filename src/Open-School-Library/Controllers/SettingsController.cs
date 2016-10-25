@@ -23,9 +23,8 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Settings
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-
             var settings =
             _context.Settings
             .Select(r => new SettingIndexViewModel

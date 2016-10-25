@@ -25,21 +25,21 @@ namespace Open_School_Library.Controllers
         // GET: Students
         public async Task<IActionResult> Index(string searchTerm, string option)
         {
-            IEnumerable<StudentIndexViewModel> students =
-            _context.Students
-            .Select(r => new StudentIndexViewModel
-            {
-                StudentID = r.StudentID,
-                FirstName = r.FirstName,
-                LastName = r.LastName,
-                Grade = r.Grade,
-                Fines = r.Fines,
-                IssuedID = r.IssuedID,
-                Email = r.Email,
-                TeacherID = r.TeacherID,
-                TeacherFirstName = r.Teacher.FirstName,
-                TeacherLastName = r.Teacher.LastName
-            });
+            var students = from student in _context.Students
+                           select new StudentIndexViewModel
+                           {
+                               StudentID = student.StudentID,
+                               FirstName = student.FirstName,
+                               LastName = student.LastName,
+                               Grade = student.Grade,
+                               Fines = student.Fines,
+                               IssuedID = student.IssuedID,
+                               Email = student.Email,
+                               TeacherID = student.TeacherID,
+                               TeacherFirstName = student.Teacher.FirstName,
+                               TeacherLastName = student.Teacher.LastName
+                           };
+
 
             if (!String.IsNullOrEmpty(searchTerm))
             {
@@ -68,12 +68,12 @@ namespace Open_School_Library.Controllers
                 }
             }
 
-            return View(students);
+            return View(await students.ToListAsync());
 
         }
 
         // GET: Students/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -134,7 +134,7 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Students/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -147,7 +147,7 @@ namespace Open_School_Library.Controllers
             .Select(r => new StudentEditViewModel
             {
 
-                StudentID= r.StudentID,
+                StudentID = r.StudentID,
                 FirstName = r.FirstName,
                 LastName = r.LastName,
                 Grade = r.Grade,
@@ -205,7 +205,7 @@ namespace Open_School_Library.Controllers
         }
 
         // GET: Students/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
