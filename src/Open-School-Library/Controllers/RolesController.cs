@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Open_School_Library.Controllers
 {
-    //[Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator")]
     public class RolesController : Controller
     {
         private readonly ApplicationDbContext _context;
