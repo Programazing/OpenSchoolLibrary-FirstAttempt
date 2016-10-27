@@ -23,7 +23,7 @@ namespace Open_School_Library.Models.BookViewModels
         [Required(ErrorMessage = "Dewey is Required!")]
         [Display(Name = "Dewey")]
         public int DeweyID { get; set; }
-        [Range(10, 13)]
+        [MaxLength(13), MinLength(10)]
         public int ISBN { get; set; }
 
         public SelectList GenreList { get; set; }
