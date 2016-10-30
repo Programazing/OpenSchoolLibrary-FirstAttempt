@@ -23,7 +23,8 @@ namespace Open_School_Library.Models.BookViewModels
         public SelectList GenreList { get; set; }
         public int DeweyID { get; set; }
         public SelectList DeweyList { get; set; }
-        [Required(ErrorMessage = "Author is Required!")]
+        [Required(ErrorMessage = "ISBN is Required!")]
+        [MaxLength(13), MinLength(10)]
         public int ISBN { get; set; }
         public string Availability { get; set; }
     }
