@@ -17,7 +17,6 @@ namespace Open_School_Library.Models.StudentViewModels
         [Required(ErrorMessage = "Last name is Required!")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "Grade is Required!")]
-        [Range(0, 99)]
         public int Grade { get; set; }
         public decimal? Fines { get; set; }
         [Display(Name = "Issued ID")]

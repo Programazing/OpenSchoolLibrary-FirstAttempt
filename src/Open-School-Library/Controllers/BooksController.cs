@@ -247,6 +247,7 @@ namespace Open_School_Library.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: Books/Checkout/5
         [HttpGet]
         public IActionResult Checkout(int? id)
         {
@@ -287,6 +288,7 @@ namespace Open_School_Library.Controllers
 
         }
 
+        // POST: Books/Checkout/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Checkout(int BookID, int StudentID)
@@ -294,7 +296,7 @@ namespace Open_School_Library.Controllers
 
             if (ModelState.IsValid && isBookCheckedOut(BookID) == false)
             {
-                int thirtyDays =
+                int CheckoutDuration =
                     _context.Settings
                     .Select(s => s.CheckoutDurationInDays)
                     .FirstOrDefault();
@@ -305,7 +307,7 @@ namespace Open_School_Library.Controllers
                     BookID = BookID,
                     StudentID = StudentID,
                     CheckedOutOn = DateTime.Now,
-                    DueOn = DateTime.Now.AddDays(thirtyDays)
+                    DueOn = DateTime.Now.AddDays(CheckoutDuration)
 
                 };
 

@@ -28,21 +28,26 @@
         <div class="form-group">
             <label asp-for="Grade" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Grade" class="form-control" />
+                <input asp-for="Grade" min="0" max="99" class="form-control" />
                 <span asp-validation-for="Grade" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
             <label asp-for="Fines" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Fines" class="form-control" />
+
+                <div class="input-group" style="width:280px;">
+                    <span class="input-group-addon">$</span>
+                    <input asp-for="Fines" type="number" min="0.01" step="0.01" max="1000" class="form-control" />
+                </div>
+
                 <span asp-validation-for="Fines" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
             <label asp-for="IssuedID" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="IssuedID" class="form-control" />
+                <input asp-for="IssuedID" min="1" max="9999" class="form-control" />
                 <span asp-validation-for="IssuedID" class="text-danger" />
             </div>
         </div>
