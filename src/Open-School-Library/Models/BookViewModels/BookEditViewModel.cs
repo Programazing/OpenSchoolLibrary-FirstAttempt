@@ -24,7 +24,7 @@ namespace Open_School_Library.Models.BookViewModels
         public int DeweyID { get; set; }
         public SelectList DeweyList { get; set; }
         [Required(ErrorMessage = "ISBN is Required!")]
-        [MaxLength(13), MinLength(10)]
+        [MinLength(10, ErrorMessage = "Minimum length must be 10 numbers."), MaxLength(13, ErrorMessage = "Maximum length must be 13 numbers.")]
         public int ISBN { get; set; }
         public string Availability { get; set; }
     }
