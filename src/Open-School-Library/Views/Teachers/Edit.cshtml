@@ -29,7 +29,7 @@
         <div class="form-group">
             <label asp-for="Grade" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Grade" class="form-control" />
+                <input asp-for="Grade" min="0" class="form-control" />
                 <span asp-validation-for="Grade" class="text-danger" />
             </div>
         </div>

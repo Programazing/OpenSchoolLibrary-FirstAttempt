@@ -16,6 +16,7 @@ namespace Open_School_Library.Models.TeacherViewModels
         [Required(ErrorMessage = "Last Name is Required!")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "A Grade is Required!")]
+        [Range(0, 99)]
         public int Grade { get; set; }
     }
 }
