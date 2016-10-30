@@ -60,9 +60,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Grade)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fines)
-            </td>
+
+            @if ((double)item.Fines < 00.01)
+            {
+               <td></td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fines)
+                </td>
+            }
+
             <td>
                 @Html.DisplayFor(modelItem => item.IssuedID)
             </td>
