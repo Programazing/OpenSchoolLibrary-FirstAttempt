@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
 using Open_School_Library.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Open_School_Library.Models;
 using Microsoft.AspNetCore.Identity;
-using Open_School_Library.Models.SettingViewModel;
 using Open_School_Library.Data.Entities;
 
 namespace Open_School_Library.Migrations
