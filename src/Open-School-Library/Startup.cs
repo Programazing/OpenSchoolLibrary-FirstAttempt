@@ -13,6 +13,7 @@ using Open_School_Library.Data;
 using Open_School_Library.Models;
 using Open_School_Library.Services;
 using Open_School_Library.Helpers;
+using Open_School_Library.Migrations;
 
 namespace Open_School_Library
 {
@@ -98,6 +99,8 @@ namespace Open_School_Library
             });
 
             //DbInitializer.Initialize(context);
+
+            DatabaseSeeding.Initialize(app.ApplicationServices);
         }
     }
 }
