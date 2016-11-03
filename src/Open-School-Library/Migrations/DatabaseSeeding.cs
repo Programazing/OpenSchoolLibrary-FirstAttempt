@@ -8,15 +8,40 @@ using Open_School_Library.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Open_School_Library.Models;
 using Microsoft.AspNetCore.Identity;
+using Open_School_Library.Models.SettingViewModel;
+using Open_School_Library.Data.Entities;
 
 namespace Open_School_Library.Migrations
 {
     public static class DatabaseSeeding
     {
-        //TODO: Add logging to the exceptions. 
+        //TODO: Add logging to the exceptions. Break up Initialize into smaller methods.
         public static async void Initialize(IServiceProvider serviceProvider)
         {
-            var context = serviceProvider.GetService<ApplicationDbContext>();
+            var identityContext = serviceProvider.GetService<ApplicationDbContext>();
+            var libraryContext = serviceProvider.GetService<LibraryContext>();
+
+            try
+            {
+                if(!libraryContext.Settings.Any())
+                {
+                    var settings = new Setting()
+                    {
+                        AreFinesEnabled = true,
+                        CheckoutDurationInDays = 30,
+                        FineAmountPerDay = 0.25m
+                    };
+
+                    libraryContext.Add(settings);
+                    await libraryContext.SaveChangesAsync();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var error = ex.Message;
+            }
+
 
             string[] roles = new string[] { "Administrator", "Librarian" };
 
@@ -24,9 +49,9 @@ namespace Open_School_Library.Migrations
             {
                 foreach (string role in roles)
                 {
-                    var roleStore = new RoleStore<IdentityRole>(context);
+                    var roleStore = new RoleStore<IdentityRole>(identityContext);
 
-                    if (!context.Roles.Any(r => r.Name == role))
+                    if (!identityContext.Roles.Any(r => r.Name == role))
                     {
                         await roleStore.CreateAsync(new IdentityRole()
                         {
@@ -38,7 +63,7 @@ namespace Open_School_Library.Migrations
             }
             catch (Exception ex)
             {
-
+                var error = ex.Message;
             }
 
 
@@ -54,13 +79,13 @@ namespace Open_School_Library.Migrations
 
             try
             {
-                if (context.Users.Where(u => u.UserName == "Administrator") == null)
+                if (identityContext.Users.Where(u => u.UserName == adminUser.UserName) == null)
                 {
                     var password = new PasswordHasher<ApplicationUser>();
                     var hashed = password.HashPassword(adminUser, "SuperSecretPassword2#");
                     adminUser.PasswordHash = hashed;
 
-                    var userStore = new UserStore<ApplicationUser>(context);
+                    var userStore = new UserStore<ApplicationUser>(identityContext);
                     var result = userStore.CreateAsync(adminUser);
                 }
             }
@@ -80,11 +105,11 @@ namespace Open_School_Library.Migrations
 
             try
             {
-                await context.SaveChangesAsync();
+                await identityContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-
+                var error = ex.Message;
             }
         }
 
