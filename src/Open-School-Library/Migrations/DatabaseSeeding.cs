@@ -13,6 +13,9 @@ namespace Open_School_Library.Migrations
     public static class DatabaseSeeding
     {
         //TODO: Add logging to the exceptions. Break up Initialize into smaller methods.
+        static IServiceProvider services;
+        static UserManager<ApplicationUser> _userManager = services.GetService<UserManager<ApplicationUser>>();
+
         public static async void Initialize(IServiceProvider serviceProvider)
         {
             var identityContext = serviceProvider.GetService<ApplicationDbContext>();
@@ -76,7 +79,7 @@ namespace Open_School_Library.Migrations
 
             try
             {
-                if (identityContext.Users.Where(u => u.UserName == adminUser.UserName) == null)
+                if (!identityContext.Users.Where(u => u.UserName == adminUser.UserName).Any())
                 {
                     var password = new PasswordHasher<ApplicationUser>();
                     var hashed = password.HashPassword(adminUser, "SuperSecretPassword2#");
