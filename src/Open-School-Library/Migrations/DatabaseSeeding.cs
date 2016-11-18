@@ -71,8 +71,8 @@ namespace Open_School_Library.Migrations
             {
                 Email = "admin@library.com",
                 NormalizedEmail = "ADMIN@LIBRARY.COM",
-                UserName = "Administrator",
-                NormalizedUserName = "ADMINISTRATOR",
+                UserName = "admin@library.com",
+                NormalizedUserName = "ADMIN@LIBRARY.COM",
                 SecurityStamp = Guid.NewGuid().ToString("D")
             };
 
