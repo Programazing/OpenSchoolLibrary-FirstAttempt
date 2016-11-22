@@ -10,63 +10,27 @@ using Open_School_Library.Data.Entities;
 
 namespace Open_School_Library.Migrations
 {
-    public static class DatabaseSeeding
+    public class DatabaseSeeding
     {
         //TODO: Add logging to the exceptions. Break up Initialize into smaller methods.
-        static IServiceProvider services;
-        static UserManager<ApplicationUser> _userManager = services.GetService<UserManager<ApplicationUser>>();
+        //static IServiceProvider services;
+        //static UserManager<ApplicationUser> _userManager = services.GetService<UserManager<ApplicationUser>>();
 
-        public static async void Initialize(IServiceProvider serviceProvider)
+        //private static readonly ApplicationDbContext _identityContext;
+        //private static readonly LibraryContext _libraryContext;
+
+        //public DatabaseSeeding(IServiceProvider serviceProvider)
+        //{
+        //    _identityContext = serviceProvider.GetService<ApplicationDbContext>();
+        //    _libraryContext = serviceProvider.GetService<LibraryContext>();
+        //}
+
+
+        public static async Task Initialize(IServiceProvider serviceProvider)
         {
             var identityContext = serviceProvider.GetService<ApplicationDbContext>();
             var libraryContext = serviceProvider.GetService<LibraryContext>();
-
-            try
-            {
-                if(!libraryContext.Settings.Any())
-                {
-                    var settings = new Setting()
-                    {
-                        AreFinesEnabled = true,
-                        CheckoutDurationInDays = 30,
-                        FineAmountPerDay = 0.25m
-                    };
-
-                    libraryContext.Add(settings);
-                    await libraryContext.SaveChangesAsync();
-                }
-
-            }
-            catch (Exception ex)
-            {
-                var error = ex.Message;
-            }
-
-
             string[] roles = new string[] { "Administrator", "Librarian" };
-
-            try
-            {
-                foreach (string role in roles)
-                {
-                    var roleStore = new RoleStore<IdentityRole>(identityContext);
-
-                    if (!identityContext.Roles.Any(r => r.Name == role))
-                    {
-                        await roleStore.CreateAsync(new IdentityRole()
-                        {
-                            Name = role,
-                            NormalizedName = role.ToUpper()
-                        });
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                var error = ex.Message;
-            }
-
-
             var adminUser = new ApplicationUser
             {
                 Email = "admin@library.com",
@@ -76,7 +40,68 @@ namespace Open_School_Library.Migrations
                 SecurityStamp = Guid.NewGuid().ToString("D")
             };
 
+            await PopulateSettings(libraryContext).Result;
 
+            await CreateUserRoles(identityContext, roles);
+
+            await AddAdminToUsers(identityContext, adminUser);
+            
+            await AssignAdminToRole(serviceProvider, adminUser.Email, roles[0]);
+        }
+
+        private static async Task<Setting> PopulateSettings(LibraryContext libraryContext)
+        {
+            var settings = new Setting()
+            {
+                AreFinesEnabled = true,
+                CheckoutDurationInDays = 30,
+                FineAmountPerDay = 0.25m
+            };
+
+            if (!libraryContext.Settings.Any())
+            {
+                try
+                {
+                    libraryContext.Add(settings);
+                    await libraryContext.SaveChangesAsync();
+
+                    return settings;
+                }
+                catch (Exception ex)
+                {
+                    var error = ex.Message;
+                }
+            }
+
+            return settings;
+        }
+        private static async Task CreateUserRoles (ApplicationDbContext identityContext, String[] roles)
+        {
+            try
+            {
+                foreach (string role in roles)
+                {
+                    var roleStore = new RoleStore<IdentityRole>(identityContext);
+                    if (!identityContext.Roles.Any(r => r.Name == role))
+                    {
+                        await roleStore.CreateAsync(new IdentityRole()
+                        {
+                            Name = role,
+                            NormalizedName = role.ToUpper()
+                        });
+                    }
+                }
+
+                await identityContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                var error = ex.Message;
+            }
+        }
+        private static async Task AddAdminToUsers(ApplicationDbContext identityContext,
+            ApplicationUser adminUser)
+        {
             try
             {
                 if (!identityContext.Users.Where(u => u.UserName == adminUser.UserName).Any())
@@ -86,40 +111,30 @@ namespace Open_School_Library.Migrations
                     adminUser.PasswordHash = hashed;
 
                     var userStore = new UserStore<ApplicationUser>(identityContext);
-                    var result = userStore.CreateAsync(adminUser);
+                    var result = await userStore.CreateAsync(adminUser);
+
+                    await identityContext.SaveChangesAsync();
                 }
             }
             catch (Exception ex)
             {
                 var error = ex.Message;
             }
-
-            try
-            {
-                await AssignRole(serviceProvider, adminUser.Email, roles[0]);
-            }
-            catch (Exception ex)
-            {
-                var error = ex.Message;
-            }
-
-            try
-            {
-                await identityContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                var error = ex.Message;
-            }
         }
-
-        public static async Task<IdentityResult> AssignRole(IServiceProvider services, string email, string role)
+        private static async Task AssignAdminToRole(IServiceProvider services,
+            string email, string role)
         {
-            UserManager<ApplicationUser> _userManager = services.GetService<UserManager<ApplicationUser>>();
-            ApplicationUser user = await _userManager.FindByEmailAsync(email);
-            var result = await _userManager.AddToRoleAsync(user, role);
-
-            return result;
+            try
+            {
+                UserManager<ApplicationUser> _userManager = services.GetService<UserManager<ApplicationUser>>();
+                ApplicationUser user = await _userManager.FindByEmailAsync(email);
+                var result = await _userManager.AddToRoleAsync(user, role);
+            }
+            catch (Exception ex)
+            {
+                var error = ex.Message;
+                
+            }
         }
 
 
