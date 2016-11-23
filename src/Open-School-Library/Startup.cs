@@ -69,7 +69,7 @@ namespace Open_School_Library
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, LibraryContext libraryContext,
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, LibraryContext libraryContext,
             ApplicationDbContext identityContext)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
@@ -99,19 +99,16 @@ namespace Open_School_Library
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            //This was left in the project in case you want
+            //to use it to create your own test data.
+
             //DbInitializer.Initialize(context);
 
-            using (libraryContext)
-            {
-                libraryContext.Database.Migrate();
-            }
+            libraryContext.Database.Migrate();
 
-            using (identityContext)
-            {
-                identityContext.Database.Migrate();
-            }
+            identityContext.Database.Migrate();
 
-            DatabaseSeeding.Initialize(app.ApplicationServices);
+            await DatabaseSeeding.Initialize(app.ApplicationServices);
         }
     }
 }

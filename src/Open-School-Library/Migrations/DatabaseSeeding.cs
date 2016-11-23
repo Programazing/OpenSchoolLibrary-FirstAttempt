@@ -12,19 +12,7 @@ namespace Open_School_Library.Migrations
 {
     public class DatabaseSeeding
     {
-        //TODO: Add logging to the exceptions. Break up Initialize into smaller methods.
-        //static IServiceProvider services;
-        //static UserManager<ApplicationUser> _userManager = services.GetService<UserManager<ApplicationUser>>();
-
-        //private static readonly ApplicationDbContext _identityContext;
-        //private static readonly LibraryContext _libraryContext;
-
-        //public DatabaseSeeding(IServiceProvider serviceProvider)
-        //{
-        //    _identityContext = serviceProvider.GetService<ApplicationDbContext>();
-        //    _libraryContext = serviceProvider.GetService<LibraryContext>();
-        //}
-
+        //TODO: Add logging to the exceptions.
 
         public static async Task Initialize(IServiceProvider serviceProvider)
         {
@@ -40,13 +28,15 @@ namespace Open_School_Library.Migrations
                 SecurityStamp = Guid.NewGuid().ToString("D")
             };
 
-            await PopulateSettings(libraryContext).Result;
+            await PopulateSettings(libraryContext);
 
             await CreateUserRoles(identityContext, roles);
 
             await AddAdminToUsers(identityContext, adminUser);
             
             await AssignAdminToRole(serviceProvider, adminUser.Email, roles[0]);
+
+            return;
         }
 
         private static async Task<Setting> PopulateSettings(LibraryContext libraryContext)
