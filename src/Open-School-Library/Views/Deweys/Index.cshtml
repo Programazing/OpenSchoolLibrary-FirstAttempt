@@ -1,0 +1,41 @@
+@model IEnumerable<Open_School_Library.Models.DeweyViewModels.DeweyIndexViewModel>
+
+@{
+    ViewData["Title"] = "Dewey";
+}
+
+<h2>Dewey Decimal System</h2>
+
+<p>
+    <a asp-action="Create">Create New Dewey</a>
+</p>
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DeweyID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.DeweyID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.DeweyID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

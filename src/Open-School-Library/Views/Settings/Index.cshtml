@@ -1,0 +1,58 @@
+@model Open_School_Library.Models.SettingViewModel.SettingIndexViewModel
+
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<h2>Settings</h2>
+
+<form asp-action="Index" class="text-nowrap">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="SettingID" />
+        <div class="form-group">
+            <label asp-for="CheckoutDurationInDays" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CheckoutDurationInDays" class="form-control" />
+                <span asp-validation-for="CheckoutDurationInDays" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="AreFinesEnabled" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="AreFinesEnabled" class="big-checkbox" />
+                <span asp-validation-for="AreFinesEnabled" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="FineAmountPerDay" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                @if (@Model.AreFinesEnabled == true)
+                {
+                    <div class="input-group" style="width:280px;">
+                        <span class="input-group-addon">$</span>
+                        <input asp-for="FineAmountPerDay" class="form-control" />
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group" style="width:280px;">
+                        <span class="input-group-addon">$</span>
+                        <input asp-for="FineAmountPerDay" class="form-control" disabled />
+                    </div>
+                }
+                <span asp-validation-for="FineAmountPerDay" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

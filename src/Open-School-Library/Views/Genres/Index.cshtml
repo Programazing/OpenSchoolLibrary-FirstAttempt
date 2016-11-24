@@ -1,0 +1,35 @@
+@model IEnumerable<Open_School_Library.Models.GenreViewModels.GenreIndexViewModel>
+
+@{
+    ViewData["Title"] = "Genres";
+}
+
+<h2>Genres</h2>
+
+<p>
+    <a asp-action="Create">Create New Genre</a>
+</p>
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.GenreId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.GenreId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.GenreId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

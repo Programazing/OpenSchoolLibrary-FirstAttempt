@@ -1,0 +1,101 @@
+@model IEnumerable<Open_School_Library.Models.BookViewModels.BookIndexViewModel>
+
+@{
+    ViewData["Title"] = "Book Catalog";
+}
+
+<h2>Book Catalog</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form asp-controller="Books" asp-action="Index" method="get" class="form-inline">
+    <p>
+        <input type="text" name="SearchTerm" class="input-sm">
+        <select name="Option" class="form-control">
+            <option value="title" selected>Title</option>
+            <option value="author">Author</option>
+            <option value="isbn">ISBN</option>
+            <option value="genre">Genre</option>
+        </select>
+        <input type="submit" value="Search" class="btn"/>
+    </p>
+</form>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ISBN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GenreName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsAvailable)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ISBN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GenreName)
+                    </td>
+                    <td>
+                        @if (item.IsAvailable == false)
+                {
+                            <div class="checkedout"> Checked Out </div>
+                }
+                else
+                {
+                            <div>Available</div>
+
+                }
+
+
+                    </td>
+                    @if (await AuthorizationService.AuthorizeAsync(User, "ElevatedRole"))
+                    {
+                        <td>
+                            @if (item.IsAvailable == false)
+                            {
+                                    <div>
+                                        <a asp-action="Return" asp-route-id="@item.BookId">Return</a> |
+                                        <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+                                    </div>
+                            }
+                            else
+                            {
+                                    <div>
+                                        <a asp-action="Checkout" asp-route-id="@item.BookId">Check Out</a> |
+                                        <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+                                    </div>
+                            }
+                        </td>
+                    }
+                </tr>
+}
+        </tbody>
+    </table>
+</div>

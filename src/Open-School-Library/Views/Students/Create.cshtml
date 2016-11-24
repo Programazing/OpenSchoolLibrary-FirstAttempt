@@ -1,0 +1,81 @@
+@model Open_School_Library.Models.StudentViewModels.StudentCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Student</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="FirstName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Grade" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Grade" min="0" max="99" class="form-control" />
+                <span asp-validation-for="Grade" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Fines" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+
+                <div class="input-group" style="width:280px;">
+                    <span class="input-group-addon">$</span>
+                    <input asp-for="Fines" type="number" min="0" step="0.01" max="1000" class="form-control" />
+                </div>
+
+                <span asp-validation-for="Fines" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="IssuedID" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="IssuedID" min="1" max="100000" class="form-control" />
+                <span asp-validation-for="IssuedID" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Email" type="email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TeacherID" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="TeacherID" class ="form-control" asp-items="@Model.Teacher"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

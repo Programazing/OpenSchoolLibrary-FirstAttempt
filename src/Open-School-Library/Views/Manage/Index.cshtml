@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@model IndexViewModel
+@inject IAuthorizationService AuthorizationService
+
+
+@{
+    ViewData["Title"] = "Manage your account";
+}
+
+<h2>@ViewData["Title"].</h2>
+<p class="text-success">@ViewData["StatusMessage"]</p>
+
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Email:</dt>
+        <dd>
+            @Model.Email
+        </dd>
+        <dt>Password:</dt>
+        <dd>
+            @if (Model.HasPassword)
+            {
+                <a asp-controller="Manage" asp-action="ChangePassword" class="btn-bracketed">Change</a>
+            }
+            else
+            {
+                <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Create</a>
+            }
+        </dd>
+        <dt>Roles:</dt>
+        <dd>
+            @Model.Roles.FirstOrDefault()
+        </dd>
+    </dl>
+</div>
+
+<div>
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Administrator Control Panel", "Index", "Admin")
+    }
+
+    @if (await AuthorizationService.AuthorizeAsync(User, "ElevatedRole"))
+    {
+        
+    }
+    
+</div>
