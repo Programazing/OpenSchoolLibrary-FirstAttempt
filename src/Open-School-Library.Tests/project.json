@@ -16,5 +16,10 @@
         "Microsoft.DotNet.InternalAbstractions": "1.0.0"
       }
     }
+  },
+  "buildOptions": {
+    "copyToOutput": {
+      "include": [ "xunit.runner.json" ]
+    }
   }
 }
