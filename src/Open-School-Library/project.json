@@ -41,8 +41,8 @@
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0",
     "Microsoft.AspNetCore.Routing": "1.1.0",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
-    "Microsoft.ApplicationInsights.AspNetCore": "1.0.2",
-    "BundlerMinifier.Core": "2.2.306"
+    "BundlerMinifier.Core": "2.2.306",
+    "Microsoft.ApplicationInsights.AspNetCore": "2.0.0"
   },
 
   "tools": {
