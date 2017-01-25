@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Open_School_Library.Tests.Controllers
 {
-    public class HomeControllerTests
+    public class HomeControllerTests: IDisposable
     {
         private HomeController _homeController;
 
@@ -23,6 +23,11 @@ namespace Open_School_Library.Tests.Controllers
             ViewResult result = _homeController.Index() as ViewResult;
 
             Assert.NotNull(result);
+        }
+
+        public void Dispose()
+        {
+            _homeController.Dispose();
         }
     }
 }
