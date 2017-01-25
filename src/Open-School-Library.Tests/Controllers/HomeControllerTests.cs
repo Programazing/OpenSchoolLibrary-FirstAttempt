@@ -10,12 +10,17 @@ namespace Open_School_Library.Tests.Controllers
 {
     public class HomeControllerTests
     {
+        private HomeController _homeController;
+
+        public HomeControllerTests()
+        {
+            _homeController = new HomeController();
+        }
+
         [Fact]
         public void IndexReturnsAView()
         {
-            HomeController controller = new HomeController();
-
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = _homeController.Index() as ViewResult;
 
             Assert.NotNull(result);
         }
