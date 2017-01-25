@@ -25,6 +25,30 @@ namespace Open_School_Library.Tests.Controllers
             Assert.NotNull(result);
         }
 
+        [Fact]
+        public void AboutReturnsAView()
+        {
+            ViewResult result = _homeController.About() as ViewResult;
+
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void ContactReturnsAView()
+        {
+            ViewResult result = _homeController.Contact() as ViewResult;
+
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void ErrorReturnsAView()
+        {
+            ViewResult result = _homeController.Error() as ViewResult;
+
+            Assert.NotNull(result);
+        }
+
         public void Dispose()
         {
             _homeController.Dispose();
