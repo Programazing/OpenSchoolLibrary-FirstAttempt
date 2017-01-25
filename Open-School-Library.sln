@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Open-School-Library", "src\Open-School-Library\Open-School-Library.xproj", "{998E19E9-6AA5-4F83-AD8B-BDD68349505A}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Open-School-Library.Tests", "src\Open-School-Library.Tests\Open-School-Library.Tests.xproj", "{6AC4A468-DF5C-4B71-BF62-49494419A92B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,11 +24,16 @@ Global
 		{998E19E9-6AA5-4F83-AD8B-BDD68349505A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{998E19E9-6AA5-4F83-AD8B-BDD68349505A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{998E19E9-6AA5-4F83-AD8B-BDD68349505A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AC4A468-DF5C-4B71-BF62-49494419A92B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AC4A468-DF5C-4B71-BF62-49494419A92B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AC4A468-DF5C-4B71-BF62-49494419A92B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AC4A468-DF5C-4B71-BF62-49494419A92B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{998E19E9-6AA5-4F83-AD8B-BDD68349505A} = {0D249CC7-A52E-4A9E-ABAF-52D266A9CE86}
+		{6AC4A468-DF5C-4B71-BF62-49494419A92B} = {0D249CC7-A52E-4A9E-ABAF-52D266A9CE86}
 	EndGlobalSection
 EndGlobal
