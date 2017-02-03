@@ -10,6 +10,7 @@ using Open_School_Library.Data.Entities;
 using Open_School_Library.Models.BookViewModels;
 using Open_School_Library.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using Open_School_Library.Repositories;
 
 namespace Open_School_Library.Controllers
 {
@@ -18,32 +19,21 @@ namespace Open_School_Library.Controllers
     {
         private readonly LibraryContext _context;
         private readonly FineCalculations _finesCalculations;
+        private readonly IBookRepository _repository;
 
-        public BooksController(LibraryContext context, FineCalculations finesCalculations)
+        public BooksController(LibraryContext context,
+            FineCalculations finesCalculations)
         {
             _context = context;
             _finesCalculations = finesCalculations;
+            _repository = new SQLRepository(_context);
         }
 
         [AllowAnonymous]
         // GET: Books
-        public async Task<IActionResult> Index(string searchTerm, string option)
+        public IActionResult Index(string searchTerm, string option)
         {
-
-            var books = from book in _context.Books
-                            join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on book.BookId equals loan.BookID into result
-                            from loanWithDefault in result.DefaultIfEmpty()
-                            orderby book.Title
-                            select new BookIndexViewModel
-                            {
-                                BookId = book.BookId,
-                                Title = book.Title,
-                                Author= book.Author,
-                                ISBN = book.ISBN,
-                                GenreName = book.Genre.Name,
-                                IsAvailable = loanWithDefault == null,
-                                AvailableOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.DueOn
-                            };
+            var books = _repository.GetAllBooks();
 
             if (!String.IsNullOrEmpty(searchTerm))
             {
@@ -68,7 +58,7 @@ namespace Open_School_Library.Controllers
                 }
             }
 
-            return View(await books.ToListAsync());
+            return View(books);
         }
 
         // GET: Books/Details/5
@@ -79,25 +69,7 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            var book = (from theBook in _context.Books.Where(b => b.BookId == id)
-                        join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on theBook.BookId equals loan.BookID into result
-                        from loanWithDefault in result.DefaultIfEmpty()
-                        select new BookDetailsViewModel
-                        {
-                            BookID = theBook.BookId,
-                            SubTitle = theBook.SubTitle,
-                            Title = theBook.Title,
-                            Author = theBook.Author,
-                            ISBN = theBook.ISBN,
-                            GenreName = theBook.Genre.Name,
-                            DeweyName = theBook.Dewey.Name,
-                            StudentID = loanWithDefault == null ? null : loanWithDefault.StudentID,
-                            StudentFristName = loanWithDefault == null ? null : loanWithDefault.Student.FirstName,
-                            StudentLastName = loanWithDefault == null ? null : loanWithDefault.Student.LastName,
-                            CheckedOutOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.CheckedOutOn,
-                            IsAvailable = loanWithDefault == null,
-                            AvailableOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.DueOn
-                        }).FirstOrDefault();
+            var book = _repository.GetBook(id);
 
             if (book == null)
             {
@@ -127,8 +99,8 @@ namespace Open_School_Library.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
-                await _context.SaveChangesAsync();
+                await _repository.AddBook(book);
+
                 return RedirectToAction("Index");
             }
             ViewData["DeweyID"] = new SelectList(_context.Deweys, "DeweyID", "DeweyID", book.DeweyID);
@@ -144,19 +116,7 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            var book =
-            _context.Books
-            .Where(b => b.BookId == id)
-            .Select(r => new BookEditViewModel
-            {
-                BookID = r.BookId,
-                Title = r.Title,
-                SubTitle = r.SubTitle,
-                Author = r.Author,
-                ISBN = r.ISBN,
-                DeweyID = r.Dewey.DeweyID,
-                GenreID = r.Genre.GenreId
-            }).FirstOrDefault();
+            var book = _repository.GetBookToUpdate(id);
 
             book.GenreList = new SelectList(_context.Genres.Select(b => new { b.GenreId, b.Name }).ToList(), "GenreId", "Name");
             book.DeweyList = new SelectList(_context.Deweys.Select(b => new { b.DeweyID, b.Name }).ToList(), "DeweyID", "Name");
@@ -185,6 +145,7 @@ namespace Open_School_Library.Controllers
             {
                 try
                 {
+                    //await _repository.UpdateBook(book);
                     _context.Update(book);
                     await _context.SaveChangesAsync();
                 }
