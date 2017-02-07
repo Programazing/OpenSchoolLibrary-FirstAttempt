@@ -145,9 +145,7 @@ namespace Open_School_Library.Controllers
             {
                 try
                 {
-                    //await _repository.UpdateBook(book);
-                    _context.Update(book);
-                    await _context.SaveChangesAsync();
+                    await _repository.UpdateBook(book);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
