@@ -77,19 +77,19 @@
                             @if (item.IsAvailable == false)
                             {
                                     <div>
-                                        <a asp-action="Return" asp-route-id="@item.BookId">Return</a> |
-                                        <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
-                                        <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+                                        <a asp-action="Return" asp-route-id="@item.BookID">Return</a> |
+                                        <a asp-action="Edit" asp-route-id="@item.BookID">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.BookID">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.BookID">Delete</a>
                                     </div>
                             }
                             else
                             {
                                     <div>
-                                        <a asp-action="Checkout" asp-route-id="@item.BookId">Check Out</a> |
-                                        <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
-                                        <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+                                        <a asp-action="Checkout" asp-route-id="@item.BookID">Check Out</a> |
+                                        <a asp-action="Edit" asp-route-id="@item.BookID">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.BookID">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.BookID">Delete</a>
                                     </div>
                             }
                         </td>

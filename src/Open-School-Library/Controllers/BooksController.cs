@@ -136,7 +136,7 @@ namespace Open_School_Library.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("BookID,Author,DeweyID,GenreID,ISBN,SubTitle,Title")] Book book)
         {
-            if (id != book.BookId)
+            if (id != book.BookID)
             {
                 return NotFound();
             }
@@ -151,7 +151,7 @@ namespace Open_School_Library.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookExists(book.BookId))
+                    if (!BookExists(book.BookID))
                     {
                         return NotFound();
                     }
@@ -177,10 +177,10 @@ namespace Open_School_Library.Controllers
 
             var book =
             _context.Books
-            .Where(b => b.BookId == id)
+            .Where(b => b.BookID == id)
             .Select(r => new BookDeleteViewModel
             {
-                BookID = r.BookId,
+                BookID = r.BookID,
                 Title = r.Title,
                 SubTitle = r.SubTitle,
                 Author = r.Author,
@@ -202,7 +202,7 @@ namespace Open_School_Library.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var book = await _context.Books.SingleOrDefaultAsync(m => m.BookId == id);
+            var book = await _context.Books.SingleOrDefaultAsync(m => m.BookID == id);
             _context.Books.Remove(book);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -222,10 +222,10 @@ namespace Open_School_Library.Controllers
             {
                 var bookloan =
                 _context.Books
-                .Where(b => b.BookId == id)
+                .Where(b => b.BookID == id)
                 .Select(r => new BookCheckoutViewModel
                 {
-                    BookID = r.BookId,
+                    BookID = r.BookID,
                     Title = r.Title
 
                 }).FirstOrDefault();
@@ -299,13 +299,13 @@ namespace Open_School_Library.Controllers
             }
             else
             {
-                var bookloan = (from book in _context.Books.Where(b => b.BookId == id)
-                                join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on book.BookId equals loan.BookID into result
+                var bookloan = (from book in _context.Books.Where(b => b.BookID == id)
+                                join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on book.BookID equals loan.BookID into result
                                 from loanWithDefault in result.DefaultIfEmpty()
                                 select new BookReturnViewModel
                                 {
                                     BookLoanID = loanWithDefault.BookLoanID,
-                                    BookID = book.BookId,
+                                    BookID = book.BookID,
                                     Title = book.Title,
                                     StudentID = loanWithDefault == null ? null : loanWithDefault.StudentID,
                                     StudentFristName = loanWithDefault == null ? null : loanWithDefault.Student.FirstName,
@@ -393,7 +393,7 @@ namespace Open_School_Library.Controllers
 
         private bool BookExists(int id)
         {
-            return _context.Books.Any(e => e.BookId == id);
+            return _context.Books.Any(e => e.BookID == id);
         }
 
         private bool isBookCheckedOut(int? id)

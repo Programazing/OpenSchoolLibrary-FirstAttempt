@@ -8,7 +8,7 @@ namespace Open_School_Library.Models.BookViewModels
 {
     public class BookIndexViewModel
     {
-        public int BookId { get; set; }
+        public int BookID { get; set; }
         public string Title { get; set; }
         [Display(Name = "Author")]
         public string Author { get; set; }

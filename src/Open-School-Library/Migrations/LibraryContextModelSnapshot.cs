@@ -18,7 +18,7 @@ namespace OpenSchoolLibrary.Migrations
 
             modelBuilder.Entity("Open_School_Library.Data.Entities.Book", b =>
                 {
-                    b.Property<int>("BookId")
+                    b.Property<int>("BookID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Author");
@@ -33,7 +33,7 @@ namespace OpenSchoolLibrary.Migrations
 
                     b.Property<string>("Title");
 
-                    b.HasKey("BookId");
+                    b.HasKey("BookID");
 
                     b.HasIndex("DeweyID");
 

@@ -45,12 +45,12 @@ namespace Open_School_Library.Repositories
         public IEnumerable<BookIndexViewModel> GetAllBooks()
         {
             var books = from book in _context.Books
-                        join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on book.BookId equals loan.BookID into result
+                        join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on book.BookID equals loan.BookID into result
                         from loanWithDefault in result.DefaultIfEmpty()
                         orderby book.Title
                         select new BookIndexViewModel
                         {
-                            BookId = book.BookId,
+                            BookID = book.BookID,
                             Title = book.Title,
                             Author = book.Author,
                             ISBN = book.ISBN,
@@ -64,12 +64,12 @@ namespace Open_School_Library.Repositories
 
         public BookDetailsViewModel GetBook(int? id)
         {
-            var book = (from theBook in _context.Books.Where(b => b.BookId == id)
-                        join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on theBook.BookId equals loan.BookID into result
+            var book = (from theBook in _context.Books.Where(b => b.BookID == id)
+                        join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on theBook.BookID equals loan.BookID into result
                         from loanWithDefault in result.DefaultIfEmpty()
                         select new BookDetailsViewModel
                         {
-                            BookID = theBook.BookId,
+                            BookID = theBook.BookID,
                             SubTitle = theBook.SubTitle,
                             Title = theBook.Title,
                             Author = theBook.Author,
@@ -91,10 +91,10 @@ namespace Open_School_Library.Repositories
         {
             var book =
             _context.Books
-            .Where(b => b.BookId == id)
+            .Where(b => b.BookID == id)
             .Select(r => new BookEditViewModel
             {
-                BookID = r.BookId,
+                BookID = r.BookID,
                 Title = r.Title,
                 SubTitle = r.SubTitle,
                 Author = r.Author,

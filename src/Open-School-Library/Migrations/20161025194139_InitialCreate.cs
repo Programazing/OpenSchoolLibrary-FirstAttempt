@@ -70,7 +70,7 @@ namespace OpenSchoolLibrary.Migrations
                 name: "Books",
                 columns: table => new
                 {
-                    BookId = table.Column<int>(nullable: false)
+                    BookID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Author = table.Column<string>(nullable: true),
                     DeweyID = table.Column<int>(nullable: false),
@@ -81,7 +81,7 @@ namespace OpenSchoolLibrary.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Books", x => x.BookId);
+                    table.PrimaryKey("PK_Books", x => x.BookID);
                     table.ForeignKey(
                         name: "FK_Books_Deweys_DeweyID",
                         column: x => x.DeweyID,
@@ -140,7 +140,7 @@ namespace OpenSchoolLibrary.Migrations
                         name: "FK_BookLoans_Books_BookID",
                         column: x => x.BookID,
                         principalTable: "Books",
-                        principalColumn: "BookId",
+                        principalColumn: "BookID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BookLoans_Students_StudentID",
