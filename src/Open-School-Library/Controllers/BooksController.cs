@@ -263,29 +263,14 @@ namespace Open_School_Library.Controllers
             }
             else
             {
-                var bookloan = (from book in _context.Books.Where(b => b.BookID == id)
-                                join loan in _context.BookLoans.Where(x => !x.ReturnedOn.HasValue) on book.BookID equals loan.BookID into result
-                                from loanWithDefault in result.DefaultIfEmpty()
-                                select new BookReturnViewModel
-                                {
-                                    BookLoanID = loanWithDefault.BookLoanID,
-                                    BookID = book.BookID,
-                                    Title = book.Title,
-                                    StudentID = loanWithDefault == null ? null : loanWithDefault.StudentID,
-                                    StudentFristName = loanWithDefault == null ? null : loanWithDefault.Student.FirstName,
-                                    StudentLastName = loanWithDefault == null ? null : loanWithDefault.Student.LastName,
-                                    //Fines
-                                    CheckedOutOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.CheckedOutOn,
-                                    IsAvailable = loanWithDefault == null,
-                                    AvailableOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.DueOn
-                                }).FirstOrDefault();
+                var bookToReturn = _repository.GetBookToReturn(id);
 
-                if (bookloan == null)
+                if (bookToReturn == null)
                 {
                     return NotFound();
                 }
 
-                return View(bookloan);
+                return View(bookToReturn);
             }
         }
 

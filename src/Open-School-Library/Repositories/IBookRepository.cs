@@ -21,6 +21,8 @@ namespace Open_School_Library.Repositories
 
         BookCheckoutViewModel GetBookToCheckOut(int? id);
 
+        BookReturnViewModel GetBookToReturn(int? id);
+
         Task<Book> UpdateBook(Book updatedBook);
 
         Task<BookLoan> CheckoutBook(int BookID, int StudentID);
