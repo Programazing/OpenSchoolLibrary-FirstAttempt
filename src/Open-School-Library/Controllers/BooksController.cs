@@ -236,23 +236,8 @@ namespace Open_School_Library.Controllers
 
             if (ModelState.IsValid && isBookCheckedOut(BookID) == false)
             {
-                int CheckoutDuration =
-                    _context.Settings
-                    .Select(s => s.CheckoutDurationInDays)
-                    .FirstOrDefault();
+                var bookToCheckOut = await _repository.CheckoutBook(BookID, StudentID);
 
-
-                var bookloan = new BookLoan()
-                {
-                    BookID = BookID,
-                    StudentID = StudentID,
-                    CheckedOutOn = DateTime.Now,
-                    DueOn = DateTime.Now.AddDays(CheckoutDuration)
-
-                };
-
-                _context.Add(bookloan);
-                await _context.SaveChangesAsync();
                 ViewBag.SuccessfullyCheckedOut = "Successfully checked out!";
                 return RedirectToAction("Index");
             }

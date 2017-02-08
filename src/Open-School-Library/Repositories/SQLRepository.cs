@@ -154,5 +154,34 @@ namespace Open_School_Library.Repositories
 
             return updatedBook;
         }
+
+        public async Task<BookLoan> CheckoutBook(int BookID, int StudentID)
+        {
+            int checkoutDuration = GetCheckoutDuration();
+
+            var bookToCheckOut = new BookLoan()
+            {
+                BookID = BookID,
+                StudentID = StudentID,
+                CheckedOutOn = DateTime.Now,
+                DueOn = DateTime.Now.AddDays(checkoutDuration)
+
+            };
+
+            _context.Add(bookToCheckOut);
+            await _context.SaveChangesAsync();
+
+            return bookToCheckOut;
+        }
+
+        public int GetCheckoutDuration()
+        {
+            int CheckoutDuration =
+                    _context.Settings
+                    .Select(s => s.CheckoutDurationInDays)
+                    .FirstOrDefault();
+
+            return CheckoutDuration;
+        }
     }
 }

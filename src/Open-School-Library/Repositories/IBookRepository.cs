@@ -23,6 +23,10 @@ namespace Open_School_Library.Repositories
 
         Task<Book> UpdateBook(Book updatedBook);
 
+        Task<BookLoan> CheckoutBook(int BookID, int StudentID);
+
+        int GetCheckoutDuration();
+
         Task<Book> DeleteBook(int? id);
 
     }
