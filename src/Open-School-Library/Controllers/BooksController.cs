@@ -173,19 +173,7 @@ namespace Open_School_Library.Controllers
                 return NotFound();
             }
 
-            var book =
-            _context.Books
-            .Where(b => b.BookID == id)
-            .Select(r => new BookDeleteViewModel
-            {
-                BookID = r.BookID,
-                Title = r.Title,
-                SubTitle = r.SubTitle,
-                Author = r.Author,
-                ISBN = r.ISBN,
-                DeweyName = r.Dewey.Name,
-                GenreName = r.Genre.Name
-            }).FirstOrDefault();
+            var book = _repository.GetBookToDelete(id);
 
             if (book == null)
             {
@@ -200,9 +188,12 @@ namespace Open_School_Library.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var book = await _context.Books.SingleOrDefaultAsync(m => m.BookID == id);
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
+            //var book = await _context.Books.SingleOrDefaultAsync(m => m.BookID == id);
+            //_context.Books.Remove(book);
+            //await _context.SaveChangesAsync();
+
+            var book = await _repository.DeleteBook(id);
+
             return RedirectToAction("Index");
         }
 
@@ -218,24 +209,14 @@ namespace Open_School_Library.Controllers
 
             if (isBookCheckedOut(id) == false)
             {
-                var bookloan =
-                _context.Books
-                .Where(b => b.BookID == id)
-                .Select(r => new BookCheckoutViewModel
-                {
-                    BookID = r.BookID,
-                    Title = r.Title
+                var bookToCheckOut = _repository.GetBookToCheckOut(id);
 
-                }).FirstOrDefault();
-
-                bookloan.Students = new SelectList(_context.Students.Select(s => new { s.StudentID, Name = $"{s.FirstName} {s.LastName}" }).ToList(), "StudentID", "Name");
-
-                if (bookloan == null)
+                if (bookToCheckOut == null)
                 {
                     return NotFound();
                 }
 
-                return View(bookloan);
+                return View(bookToCheckOut);
             }
             else
             {

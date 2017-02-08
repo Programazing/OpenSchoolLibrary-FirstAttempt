@@ -15,11 +15,15 @@ namespace Open_School_Library.Repositories
 
         BookDetailsViewModel GetBook(int? id);
 
+        BookDeleteViewModel GetBookToDelete(int? id);
+
         BookEditViewModel GetBookToUpdate(int? id);
+
+        BookCheckoutViewModel GetBookToCheckOut(int? id);
 
         Task<Book> UpdateBook(Book updatedBook);
 
-        void DeleteBook(int id);
+        Task<Book> DeleteBook(int? id);
 
     }
 }

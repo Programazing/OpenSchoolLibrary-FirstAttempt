@@ -1,4 +1,6 @@
-﻿using Open_School_Library.Data;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Open_School_Library.Data;
 using Open_School_Library.Data.Entities;
 using Open_School_Library.Models.BookViewModels;
 using System;
@@ -28,8 +30,6 @@ namespace Open_School_Library.Repositories
             return newBook;
         }
 
-
-
         public async Task<Book> CreateBook(Book newBook)
         {
             _context.Add(newBook);
@@ -37,9 +37,31 @@ namespace Open_School_Library.Repositories
             return newBook;
         }
 
-        public void DeleteBook(int id)
+        public async Task<Book> DeleteBook(int? id)
         {
-            throw new NotImplementedException();
+            var book = await _context.Books.SingleOrDefaultAsync(m => m.BookID == id);
+            _context.Books.Remove(book);
+            await _context.SaveChangesAsync();
+
+            return book;
+        }
+
+        public BookCheckoutViewModel GetBookToCheckOut(int? id)
+        {
+            var bookToCheckOut =
+            _context.Books
+            .Where(b => b.BookID == id)
+            .Select(r => new BookCheckoutViewModel
+            {
+                BookID = r.BookID,
+                Title = r.Title
+
+            }).FirstOrDefault();
+
+            bookToCheckOut.Students = new SelectList(_context.Students.Select(s => new { s.StudentID, Name = $"{s.FirstName} {s.LastName}" }).ToList(), "StudentID", "Name");
+
+            return bookToCheckOut;
+
         }
 
         public IEnumerable<BookIndexViewModel> GetAllBooks()
@@ -83,6 +105,25 @@ namespace Open_School_Library.Repositories
                             IsAvailable = loanWithDefault == null,
                             AvailableOn = loanWithDefault == null ? (DateTime?)null : loanWithDefault.DueOn
                         }).FirstOrDefault();
+
+            return book;
+        }
+
+        public BookDeleteViewModel GetBookToDelete(int? id)
+        {
+            var book =
+            _context.Books
+            .Where(b => b.BookID == id)
+            .Select(r => new BookDeleteViewModel
+            {
+                BookID = r.BookID,
+                Title = r.Title,
+                SubTitle = r.SubTitle,
+                Author = r.Author,
+                ISBN = r.ISBN,
+                DeweyName = r.Dewey.Name,
+                GenreName = r.Genre.Name
+            }).FirstOrDefault();
 
             return book;
         }
